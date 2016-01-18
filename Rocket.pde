@@ -84,13 +84,17 @@ class Rocket extends GameObject
     rotate(theta); // We want rotate to happen first, so you make the call AFTER translate    
     triangle(-halfW,halfW,0,-halfW,halfW,halfW);
     
-    //flames
-    int r = (int)random(150,255);
-    int g = (int)random(125);
+    if (keys[move])
+    {
+      //flames
+      int r = (int)random(150,255);
+      int g = (int)random(125);
+      
+      stroke(r, g, 0);
+      fill(r, g, 0);
+      triangle(halfW/2, halfW+3, 0, 2*halfW,-halfW/2, halfW+3);
+    }
     
-    stroke(r, g, 0);
-    fill(r, g, 0);
-    triangle(halfW/2, halfW+3, 0, 2*halfW,-halfW/2, halfW+3);
     popMatrix();
   }   
 }
