@@ -16,7 +16,7 @@ void setup()
   starY = new int[arraySize];
   brightness= new int[arraySize];
   
-  Rocket rocket = new Rocket('W', 'A', 'D', ' ', 200, height / 2, color(255));
+  Rocket rocket = new Rocket('W', 'A', 'D', ' ', width/2, height/2, color(255));
   gameObjects.add(rocket);
   
   //draw the stars initially

@@ -80,11 +80,17 @@ class Rocket extends GameObject
     pushMatrix(); // reset the translation and rotation
     translate(pos.x, pos.y);
     stroke(c);
-    fill(c);
+    fill(0);
     rotate(theta); // We want rotate to happen first, so you make the call AFTER translate    
-    line(- halfW, halfW, 0, - halfW);
-    line(0, - halfW, halfW, halfW);
-    line(- halfW, halfW, halfW, halfW);
+    triangle(-halfW,halfW,0,-halfW,halfW,halfW);
+    
+    //flames
+    int r = (int)random(150,255);
+    int g = (int)random(125);
+    
+    stroke(r, g, 0);
+    fill(r,g,0);
+    triangle(0, halfW, 0, 2*halfW,-halfW, halfW);
     popMatrix();
   }   
 }
