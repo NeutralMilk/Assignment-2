@@ -39,10 +39,31 @@ class Rocket extends GameObject
     forward.y = - cos(theta);
     forward.mult(speed);
     
+    if(speed > 10);
+    {
+        speed = 10;
+        if(speed == 10)
+        {
+          pos.add(forward);
+        }//end if
+    }//end if
+    
+    else
+    {
+      speed --;
+      pos.add(forward);
+    }//end else
+      
     if (keys[move])
     {
       pos.add(forward);
-    }      
+      speed++;
+      
+    }
+    else
+    {
+      speed -= .01;
+    }//end else
     if (keys[left])
     {
       theta -= 0.1f;
@@ -77,11 +98,11 @@ class Rocket extends GameObject
   
   void render()
   {
-    pushMatrix(); // reset the translation and rotation
+    pushMatrix();
     translate(pos.x, pos.y);
     stroke(c);
     fill(0);
-    rotate(theta); // We want rotate to happen first, so you make the call AFTER translate    
+    rotate(theta);
     triangle(-halfW,halfW,0,-halfW,halfW,halfW);
     
     if (keys[move])
