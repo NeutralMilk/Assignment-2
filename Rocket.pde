@@ -84,8 +84,7 @@ class Rocket extends GameObject
     rotate(theta); // We want rotate to happen first, so you make the call AFTER translate    
     line(- halfW, halfW, 0, - halfW);
     line(0, - halfW, halfW, halfW);
-    line(halfW, halfW, 0, 0);
-    line(- halfW, halfW, 0, 0);
+    line(- halfW, halfW, halfW, halfW);
     popMatrix();
   }   
 }

@@ -1,5 +1,7 @@
 int[] starX;
 int[] starY;
+int[] brightness;
+
 int random;
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 boolean[] keys = new boolean[512];
@@ -12,16 +14,16 @@ void setup()
   int arraySize = (int)(height/1.5);
   starX = new int[arraySize];
   starY = new int[arraySize];
+  brightness= new int[arraySize];
   
-  Rocket rocket = new Rocket('W', 'A', 'D', ' ', 200, height / 2, color(0, 255, 255));
-  gameObjects.add(rocket);
-  rocket = new Rocket('I', 'J', 'L', 'K', width - 200, height / 2, color(255, 255, 0));
+  Rocket rocket = new Rocket('W', 'A', 'D', ' ', 200, height / 2, color(255));
   gameObjects.add(rocket);
   
   //draw the stars initially
   for (int i = 0; i < height/1.5 ; i++)
   {
-    stroke(random(255));
+    brightness[i] = (int)random(5,255);
+    stroke(brightness[i]);
     int x = (int)random(width);
     int y = (int)random(height);
     point(x, y);
@@ -58,32 +60,9 @@ void stars()
 {
   for (int i = 0; i < height/1.5 ; i++)
   {
-    stroke(random(255));
+    stroke(brightness[i]+((int)random(-5,10)));
     int x = starX[i];
     int y = starY[i];
     point(x, y);
   }//end for()
-  
-  twinkle();
 }//end stars()
-
-void twinkle()
-{
-  random = (int)random(height/1.5);
-  
-  int star_colour = (int)random(255);
-  stroke(star_colour);
-  int x = starX[random];
-  int y = starY[random];
-  point(x,y);
-  
-  if(star_colour == 0);
-  {
-    stroke(0);
-    x = (int)random(width);
-    y = (int)random(height);
-    point(x, y);
-    starX[random] = x;
-    starY[random] = y;
-  }//end if
-}//end twinkle()
