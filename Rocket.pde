@@ -89,8 +89,8 @@ class Rocket extends GameObject
     int g = (int)random(125);
     
     stroke(r, g, 0);
-    fill(r,g,0);
-    triangle(0, halfW, 0, 2*halfW,-halfW, halfW);
+    fill(r, g, 0);
+    triangle(halfW/2, halfW+3, 0, 2*halfW,-halfW/2, halfW+3);
     popMatrix();
   }   
 }
