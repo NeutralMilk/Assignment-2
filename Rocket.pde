@@ -5,6 +5,7 @@ class Rocket extends GameObject
   char left;
   char right;
   char fire;
+  char boost;
   
   int lives;
   int ammo;
@@ -19,13 +20,14 @@ class Rocket extends GameObject
     
   }
   
-  Rocket(char move, char left, char right, char fire, float startX, float startY, color c)
+  Rocket(char move, char left, char right, char boost, char fire, float startX, float startY, color c)
   {
     super(startX, startY, 50);
     this.move = move;
     this.left = left;
     this.right = right;
     this.fire = fire;
+    this.boost = boost;
     this.c = c;
     lives = 10;
     ammo = 10;
@@ -43,26 +45,17 @@ class Rocket extends GameObject
     if (keys[move])
     {
       pos.add(forward);
-      if (keyPressed) 
-      {
-        if (key == 'b')
-        {
-          speed = 20;
-        }//end if
-        else
-        {
-          speed = 6;
-        }//end else
-        
-      }//end if
     }//end if
     
-    if(moving  = false)
+    if (keys[boost]) 
     {
-      speed = 0;
-      forward.mult(speed);
-      moving = false;
-    }//end else*/
+        speed = 20;
+    }//end if
+    
+    else
+    {
+      speed = 6;
+    }//end else   
     
     if (keys[left])
     {
@@ -101,8 +94,9 @@ class Rocket extends GameObject
   {
     pushMatrix();
     translate(pos.x, pos.y);
+    strokeWeight(1);
     stroke(c);
-    fill(0);
+    fill(f);
     rotate(theta);
     triangle(-halfW,halfW,0,-halfW,halfW,halfW);
     
