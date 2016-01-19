@@ -49,8 +49,13 @@ class Rocket extends GameObject
         {
           speed = 20;
         }//end if
+        else
+        {
+          speed = 6;
+        }//end else
+        
       }//end if
-    }
+    }//end if
     
     if(moving  = false)
     {
