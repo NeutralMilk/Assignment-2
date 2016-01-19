@@ -38,17 +38,17 @@ class Rocket extends GameObject
   {
     forward.x = sin(theta);
     forward.y = - cos(theta);
-    side.mult(speed)
     forward.mult(speed);
 
     if (keys[move])
     {
-      moving = true;
       pos.add(forward);
-      speed+=.5;
-      if(speed >= 6)
+      if (keyPressed) 
       {
-        speed = 6;
+        if (key == 'b')
+        {
+          speed = 20;
+        }//end if
       }//end if
     }
     

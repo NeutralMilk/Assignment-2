@@ -5,7 +5,7 @@ abstract class GameObject
   float theta = 0.0f;
   float w;
   float halfW;
-  float speed = 1;
+  float speed = 5;
   color c; 
  
   GameObject()
@@ -18,7 +18,6 @@ abstract class GameObject
   {
     pos = new PVector(x, y);
     forward = new PVector(0, 0);
-    side = new PVector (0, 0);
     this.w = w; // Disambiguate w by using this
     this.halfW = w * 0.25f;
     this.theta = 0.0f;
