@@ -14,7 +14,7 @@ class Comet extends GameObject
   
   // From the interface. This class won't compile unless it has this method  
 
-  int sides = (int)random(4,9);
+  int sides = (int)random(3,10);
   int size = (int)random(10,40);
   void render()
   {
@@ -32,9 +32,9 @@ class Comet extends GameObject
   {
     float angle = TWO_PI / sides;
     beginShape();
-    for (float a = 0; a < TWO_PI; a += angle) {
-      float sx = x + cos(a) * size;
-      float sy = y + sin(a) * size;
+    for (float i = 0; i < TWO_PI; i += angle) {
+      float sx = x + cos(i) * size;
+      float sy = y + sin(i) * size;
       vertex(sx, sy);
     }
     endShape(CLOSE);

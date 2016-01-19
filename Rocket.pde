@@ -20,7 +20,7 @@ class Rocket extends GameObject
     
   }
   
-  Rocket(char move, char left, char right, char boost, char fire, float startX, float startY, color c)
+  Rocket(char move, char left, char right, char boost, float startX, float startY, color c)
   {
     super(startX, startY, 50);
     this.move = move;
@@ -49,7 +49,7 @@ class Rocket extends GameObject
     
     if (keys[boost]) 
     {
-        speed = 20;
+        speed = 12;
     }//end if
     
     else
@@ -70,12 +70,12 @@ class Rocket extends GameObject
     
     if (pos.x < 0)
     {
-      pos.x = width;
+      pos.x = 0;
     }
     
     if (pos.x > width)
     {
-      pos.x = 0;
+      pos.x = width;
     }
     
     if (pos.y < 0)
@@ -98,7 +98,8 @@ class Rocket extends GameObject
     stroke(c);
     fill(f);
     rotate(theta);
-    triangle(-halfW,halfW,0,-halfW,halfW,halfW);
+    //triangle(-halfW, halfW, 0,-halfW, halfW, halfW);
+    triangle(-halfW, halfW, 0,-halfW, halfW, halfW);
     
     if (keys[move])
     {
@@ -108,7 +109,7 @@ class Rocket extends GameObject
       
       stroke(r, g, 0);
       fill(r, g, 0);
-      triangle(halfW/2, halfW+3, 0, 2*halfW,-halfW/2, halfW+3);
+      triangle(halfW/2, halfW+(.3*halfW), 0, 2.25*halfW,-halfW/2, halfW+(.3*halfW));
     }
     
     popMatrix();
