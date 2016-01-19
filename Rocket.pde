@@ -32,42 +32,38 @@ class Rocket extends GameObject
   }
 
   int elapsed = 12;
+  boolean moving = false;
   
   void update()
   {
     forward.x = sin(theta);
     forward.y = - cos(theta);
+    side.mult(speed)
     forward.mult(speed);
-    
-    if(speed > 10);
-    {
-        speed = 10;
-        if(speed == 10)
-        {
-          pos.add(forward);
-        }//end if
-    }//end if
-    
-    else
-    {
-      speed --;
-      pos.add(forward);
-    }//end else
-      
+
     if (keys[move])
     {
+      moving = true;
       pos.add(forward);
-      speed++;
-      
+      speed+=.5;
+      if(speed >= 6)
+      {
+        speed = 6;
+      }//end if
     }
-    else
+    
+    if(moving  = false)
     {
-      speed -= .01;
-    }//end else
+      speed = 0;
+      forward.mult(speed);
+      moving = false;
+    }//end else*/
+    
     if (keys[left])
     {
       theta -= 0.1f;
     }
+    
     if (keys[right])
     {
       theta += 0.1f;
