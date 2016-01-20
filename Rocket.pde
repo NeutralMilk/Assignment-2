@@ -26,7 +26,6 @@ class Rocket extends GameObject
     this.move = move;
     this.left = left;
     this.right = right;
-    this.fire = fire;
     this.boost = boost;
     this.c = c;
     lives = 10;
@@ -99,7 +98,7 @@ class Rocket extends GameObject
     fill(f);
     rotate(theta);
     //triangle(-halfW, halfW, 0,-halfW, halfW, halfW);
-    triangle(-halfW, halfW, 0,-halfW, halfW, halfW);
+    triangle(halfW, -halfW,-halfW, 0, halfW, halfW);
     
     if (keys[move])
     {
@@ -109,7 +108,7 @@ class Rocket extends GameObject
       
       stroke(r, g, 0);
       fill(r, g, 0);
-      triangle(halfW/2, halfW+(.3*halfW), 0, 2.25*halfW,-halfW/2, halfW+(.3*halfW));
+      triangle(halfW+(.3*halfW), halfW/2, 2.25*halfW, 0, halfW+(.3*halfW), -halfW/2);
     }
     
     popMatrix();

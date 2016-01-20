@@ -63,5 +63,11 @@ class Comet extends GameObject
     {
       pos.y = 0;
     }
+    
+    if(pos.x > width-sideLength-border && pos.x < width - border && pos.y > (height/2)-(sideLength/2) && pos.y < (height/2)+(sideLength/2));
+    {
+      pos.x = random(width);
+      pos.y = random(height);
+    }//end if
   }
 }

@@ -1,7 +1,13 @@
+
+//variables about stars
 int[] starX;
 int[] starY;
 int[] brightness;
-int cometCount = 0;
+
+//variables to determine comet amount
+int cometAmount = 3;
+boolean create = true;
+
 float sideLength;
 float border;
 
@@ -70,35 +76,21 @@ void draw()
     GameObject go = gameObjects.get(i);
     go.update();
     go.render();
-  }
+  }    
   
-  Comet comet = new Comet();
-  switch(cometCount)
+  //create the right amount of comets for the level
+  for(int i = 0; i < cometAmount; i++)
   {
-    case 0:
-      gameObjects.add(comet);
-      cometCount++;
-      break;
-      
-    case 1:
-      gameObjects.add(comet);
-      cometCount++;
-      break;
-      
-    case 2:    
-      gameObjects.add(comet);
-      cometCount++;
-      break;
-      
-    case 3:
-      gameObjects.add(comet);
-      cometCount++;
-      break;
-      
-  }
+    createComet();
+  }//end for
 
 }//end draw()
 
+void createComet()
+{
+  Comet comet = new Comet();
+  gameObjects.add(comet);
+}//end createComet
 void stars()
 {
   for (int i = 0; i < height/1.5 ; i++)
