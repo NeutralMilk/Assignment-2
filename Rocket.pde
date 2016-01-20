@@ -1,23 +1,17 @@
 class Rocket extends GameObject
 {
-  // Fields!
+  //fields
   char move;
   char left;
   char right;
   char fire;
-  char boost;
-  
+  char boost;  
   int lives;
   int ammo;
   
-  // Constructor!!
-  // HAS NO RETURN TYPE
-  // Name is always the same as the class
   Rocket()
-  {
-    // Constructor chaining. Call a constructor in the super class
-    super(width * 0.5f, height  * 0.5f, 50);     
-    
+  {   
+    super(width * 0.5f, height  * 0.5f, 50);         
   }
   
   Rocket(char move, char left, char right, char boost, float startX, float startY, color c)
@@ -32,7 +26,6 @@ class Rocket extends GameObject
     ammo = 10;
   }
 
-  int elapsed = 12;
   boolean moving = false;
   
   void update()
@@ -41,6 +34,7 @@ class Rocket extends GameObject
     forward.y = - cos(theta);
     forward.mult(speed);
 
+    //movement
     if (keys[move])
     {
       pos.add(forward);
@@ -59,34 +53,34 @@ class Rocket extends GameObject
     if (keys[left])
     {
       theta -= 0.1f;
-    }
+    }//end if
     
     if (keys[right])
     {
       theta += 0.1f;
-    }      
-
+    }//end if   
     
+    
+    //allow top and bottom to wrap around but not left and right
     if (pos.x < 0)
     {
       pos.x = 0;
-    }
+    }//end if
     
     if (pos.x > width)
     {
       pos.x = width;
-    }
+    }//end if
     
     if (pos.y < 0)
     {
       pos.y = height;
-    }
+    }//end if
     
     if (pos.y > height)
     {
       pos.y = 0;
-    }
-    elapsed ++;
+    }//end if
   }
   
   void render()
@@ -97,7 +91,6 @@ class Rocket extends GameObject
     stroke(c);
     fill(f);
     rotate(theta);
-    //triangle(-halfW, halfW, 0,-halfW, halfW, halfW);
     triangle(halfW, -halfW,-halfW, 0, halfW, halfW);
     
     if (keys[move])

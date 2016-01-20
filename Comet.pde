@@ -32,11 +32,13 @@ class Comet extends GameObject
   {
     float angle = TWO_PI / sides;
     beginShape();
-    for (float i = 0; i < TWO_PI; i += angle) {
-      float sx = x + cos(i) * size;
-      float sy = y + sin(i) * size;
-      vertex(sx, sy);
-    }
+    for (float i = 0; i < TWO_PI; i += angle) 
+    {
+      float newX = x + cos(i) * size;
+      float newY = y + sin(i) * size;
+      vertex(newX, newY);
+    }//end for
+    
     endShape(CLOSE);
   }//end polygon()
   
@@ -64,7 +66,7 @@ class Comet extends GameObject
     {
       pos.y = 0;
     }//end if
-    speed = random(1,8);
+
   }//end update()
   
 }//end class

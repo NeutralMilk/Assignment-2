@@ -1,5 +1,6 @@
 abstract class GameObject
 {
+  //fields
   PVector pos;
   PVector forward;
   float theta = 0.0f;
@@ -11,7 +12,6 @@ abstract class GameObject
  
   GameObject()
   {
-    // Constructor chaining
     this(width * 0.25f, height  * 0.25f, 50);     
   }
   
