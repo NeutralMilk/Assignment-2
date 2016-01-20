@@ -5,7 +5,7 @@ int[] starY;
 int[] brightness;
 
 //variables to determine comet amount
-int cometAmount = 3;
+int cometAmount = 4;
 boolean create = true;
 
 float sideLength;
@@ -79,10 +79,19 @@ void draw()
   }    
   
   //create the right amount of comets for the level
-  for(int i = 0; i < cometAmount; i++)
+  
+  if (create == true)
   {
-    createComet();
-  }//end for
+    for(int i = 0; i < cometAmount; i++)
+    {
+      createComet();
+      
+      if(i == cometAmount-1)
+      {
+        create = false;
+      }//end
+    }//end for
+  }//end if
 
 }//end draw()
 

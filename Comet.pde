@@ -26,7 +26,7 @@ class Comet extends GameObject
     strokeWeight(3);
     polygon(0, 0, size, sides); 
     popMatrix();
-  }
+  }//end render()
   
   void polygon(float x, float y, float size, int sides) 
   {
@@ -43,31 +43,28 @@ class Comet extends GameObject
   void update()
   {
     theta += thetaDir;
+    
     pos.add(forward);
     if (pos.x < 0)
     {
        pos.x = width;
-    }
+    }//end if
     
     if (pos.x > width)
     {
       pos.x = 0;
-    }
+    }//end if
     
     if (pos.y < 0)
     {
       pos.y = height;
-    }
+    }//end if
     
     if (pos.y > height)
     {
       pos.y = 0;
-    }
-    
-    if(pos.x > width-sideLength-border && pos.x < width - border && pos.y > (height/2)-(sideLength/2) && pos.y < (height/2)+(sideLength/2));
-    {
-      pos.x = random(width);
-      pos.y = random(height);
     }//end if
-  }
-}
+    speed = random(1,8);
+  }//end update()
+  
+}//end class
