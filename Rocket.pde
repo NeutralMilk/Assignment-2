@@ -30,8 +30,8 @@ class Rocket extends GameObject
   
   void update()
   {
-    forward.x = sin(theta);
-    forward.y = - cos(theta);
+    forward.x = - cos(theta);
+    forward.y = - sin(theta);
     forward.mult(speed);
 
     //movement

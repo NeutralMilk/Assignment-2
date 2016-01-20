@@ -5,7 +5,7 @@ int[] starY;
 int[] brightness;
 
 //variables to determine comet amount
-int cometAmount = 4;
+int cometAmount = 100;
 boolean create = true;
 
 float sideLength;
