@@ -12,7 +12,10 @@ float sideLength;
 float border;
 
 int random;
+
+//arraylist for game objects and loading the data
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
+ArrayList<LevelData> Data = new ArrayList<LevelData>();
 
 boolean[] keys = new boolean[512];
 
@@ -20,6 +23,9 @@ void setup()
 {
   size(1600,900);
   background(0);
+  
+  //load in level data
+  loadData();
   
   //some variables that allow the stars to keep a constant position
   int arraySize = (int)(height/1.5);
@@ -48,6 +54,11 @@ void setup()
   }//end for()
 
 }//end setup()
+
+void loadData()
+{
+  String[] data = loadStrings("levels.txt");
+}//end loadData()
 
 void keyPressed()
 {
@@ -100,6 +111,7 @@ void createComet()
   Comet comet = new Comet();
   gameObjects.add(comet);
 }//end createComet
+
 void stars()
 {
   for (int i = 0; i < height/1.5 ; i++)

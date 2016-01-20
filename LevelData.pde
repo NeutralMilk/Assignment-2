@@ -4,9 +4,9 @@ class LevelData
   int numObjectives;
   int goalSize;
 
-  LevelData(String data)
+  LevelData(int data)
   {
-    String[] num = line.split(" ");
+    String[] num = data.split(" ");
     numComets = num[0];
     numObjectives = num[1];
     goalSize = num[2];
