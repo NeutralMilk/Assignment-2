@@ -52,12 +52,12 @@ class Rocket extends GameObject
     
     if (keys[left])
     {
-      theta -= 0.1f;
+      theta -= 0.15f;
     }//end if
     
     if (keys[right])
     {
-      theta += 0.1f;
+      theta += 0.15f;
     }//end if   
     
     

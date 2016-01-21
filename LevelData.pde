@@ -1,10 +1,10 @@
 class LevelData
 {
-  int numComets;
-  int numObjectives;
-  int goalSize;
+  String numComets;
+  String numObjectives;
+  String goalSize;
 
-  LevelData(int data)
+  LevelData(String data)
   {
     String[] num = data.split(" ");
     numComets = num[0];

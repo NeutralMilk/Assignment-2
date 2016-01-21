@@ -19,7 +19,7 @@ abstract class GameObject
   {
     pos = new PVector(x, y);
     forward = new PVector(-1, 0);
-    this.w = w; // Disambiguate w by using this
+    this.w = w;
     this.halfW = w * 0.25f;
     this.theta = 0.0f;
   }

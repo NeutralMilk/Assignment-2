@@ -1,11 +1,10 @@
-
 //variables about stars
 int[] starX;
 int[] starY;
 int[] brightness;
 
 //variables to determine comet amount
-int cometAmount = 100;
+int cometAmount = 10;
 boolean create = true;
 
 float sideLength;
@@ -73,30 +72,44 @@ void keyReleased()
 void draw()
 {
   background(0);
-  strokeWeight(3);
-  stroke(0,125,255);
-  fill(0);
   
-  rect(width-sideLength-border, (height/2)-(sideLength/2), sideLength, sideLength);
-  stroke(255);
-  strokeWeight(1);
+  //draw the spawn point
+  spawnPoint();
+  
+  //refresh the stars
   stars();
+  
+  //create the right amount of comets for the level
+  createComet();
   
   for(int i = gameObjects.size() - 1 ; i >= 0   ;i --)
   {
     GameObject go = gameObjects.get(i);
     go.update();
     go.render();
-  }    
+  }//end for    
   
-  //create the right amount of comets for the level
-  
+  //println(numComets);
+}//end draw()
+
+void spawnPoint()
+{
+  strokeWeight(3);
+  stroke(0,125,255);
+  fill(0);  
+  rect(width-sideLength-border, (height/2)-(sideLength/2), sideLength, sideLength);
+  stroke(255);
+  strokeWeight(1);  
+}//end spawnPoint()
+
+void createComet()
+{
   if (create == true)
   {
     for(int i = 0; i < cometAmount; i++)
     {
-      createComet();
-      
+      Comet comet = new Comet();
+      gameObjects.add(comet);
       if(i == cometAmount-1)
       {
         create = false;
@@ -104,12 +117,6 @@ void draw()
     }//end for
   }//end if
 
-}//end draw()
-
-void createComet()
-{
-  Comet comet = new Comet();
-  gameObjects.add(comet);
 }//end createComet
 
 void stars()
