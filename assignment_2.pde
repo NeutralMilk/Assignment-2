@@ -14,7 +14,10 @@ float border;
 int random;
 
 //arraylist for game objects and loading the data
-ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
+ArrayList<GameObject> ship = new ArrayList<GameObject>();
+ArrayList<GameObject> normalComet = new ArrayList<GameObject>();
+ArrayList<GameObject> mineComet = new ArrayList<GameObject>();
+
 ArrayList<LevelData> Data = new ArrayList<LevelData>();
 
 boolean[] keys = new boolean[512];
@@ -39,7 +42,7 @@ void setup()
   
   //create the rocket
   Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
-  gameObjects.add(rocket);
+  ship.add(rocket);
   
   //draw the stars initially
   for (int i = 0; i < height/1.5 ; i++)
@@ -83,12 +86,24 @@ void draw()
   //create the right amount of comets for the level
   createComet();
   
-  for(int i = gameObjects.size() - 1 ; i >= 0   ;i --)
+  for(int i = ship.size() - 1 ; i >= 0   ;i --)
   {
-    GameObject go = gameObjects.get(i);
+    GameObject go = ship.get(i);
     go.update();
     go.render();
-  }//end for    
+  }//end for
+  for(int i = normalComet.size() - 1 ; i >= 0   ;i --)
+  {
+    GameObject go = normalComet.get(i);
+    go.update();
+    go.render();
+  }//end for
+  for(int i = mineComet.size() - 1 ; i >= 0   ;i --)
+  {
+    GameObject go = mineComet.get(i);
+    go.update();
+    go.render();
+  }//end for 
   
   //println(numComets);
 }//end draw()
@@ -110,13 +125,13 @@ void createComet()
     for(int i = 0; i < cometAmount-mineAmount; i++)
     {      
       Comet comet = new Comet();
-      gameObjects.add(comet);
-
+      normalComet.add(comet);
     }//end for
+    
     for(int i = 0; i < mineAmount; i++)
     {      
       Comet comet = new Comet();
-      gameObjects.add(comet);
+      mineComet.add(comet);
       if(i == mineAmount-1)
       {
         create = false;
