@@ -6,6 +6,8 @@ class Comet extends GameObject
     super(random(0, width), random(0, height), 50);    
     c = 255;
     f = 0;
+    mine = true;
+    gold = color(255, 223, 0);
     forward.x = random(-1, 1);
     forward.y = random(-1, 1);
     forward.normalize();
@@ -16,6 +18,7 @@ class Comet extends GameObject
 
   int sides = (int)random(3,10);
   int size = (int)random(10,40);
+
   void render()
   {
     pushMatrix();

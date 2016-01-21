@@ -5,6 +5,7 @@ int[] brightness;
 
 //variables to determine comet amount
 int cometAmount = 10;
+int mineAmount = 4;
 boolean create = true;
 
 float sideLength;
@@ -106,14 +107,21 @@ void createComet()
 {
   if (create == true)
   {
-    for(int i = 0; i < cometAmount; i++)
-    {
+    for(int i = 0; i < cometAmount-mineAmount; i++)
+    {      
       Comet comet = new Comet();
       gameObjects.add(comet);
-      if(i == cometAmount-1)
+
+    }//end for
+    for(int i = 0; i < mineAmount; i++)
+    {      
+      Comet comet = new Comet();
+      gameObjects.add(comet);
+      if(i == mineAmount-1)
       {
         create = false;
       }//end
+      stroke(255, 223, 0);
     }//end for
   }//end if
 

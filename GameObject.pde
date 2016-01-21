@@ -9,6 +9,8 @@ abstract class GameObject
   float speed = 6;
   color c;
   color f;
+  color gold;
+  boolean mine;
  
   GameObject()
   {
