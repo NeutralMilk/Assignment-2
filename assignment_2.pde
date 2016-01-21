@@ -147,18 +147,47 @@ void createComet()
   checkCollisions();
 }//end createComet
 
-// Check every ship against every powerup
 void checkCollisions()
 {
-  for (int i = mineAmount; i < mineAmount - 1; i++)
-  {
-    if(Rocket.pos.dist(pos) == 0)
+  //check ship against mineable comets
+ for(int i = ship.size() - 1 ; i >= 0; i --)
+ {
+    GameObject go = ship.get(i);
+    if (go instanceof Rocket)
     {
-      mineComet.remove(i);
-    }//end if
-    
-  }//end for
-}
+      for(int j = mineComet.size() - 1 ; j >= 0   ;j --)
+      {
+        GameObject k = mineComet.get(j);
+        if (k instanceof MineComet) 
+          // Bounding circle collisions
+          if (go.pos.dist(k.pos) < go.halfW + k.halfW)
+          {
+            mineComet.remove(k);
+          }
+        }
+      }
+ }
+ //check ship against dangerous comets
+ for(int i = ship.size() - 1 ; i >= 0; i --)
+ {
+    GameObject go = ship.get(i);
+    if (go instanceof Rocket)
+    {
+      for(int j = normalComet.size() - 1 ; j >= 0   ;j --)
+      {
+        GameObject k = normalComet.get(j);
+        if (k instanceof Comet)
+        {
+          // Bounding circle collisions
+          if (go.pos.dist(k.pos) < go.halfW + k.halfW)
+          {
+            normalComet.remove(k);
+          }
+        }
+      }
+    }
+ } 
+}//end checkCollisions()
 void stars()
 {
   for (int i = 0; i < height/1.5 ; i++)
