@@ -5,7 +5,7 @@ class Rocket extends GameObject
   char left;
   char right;
   char fire;
-  char boost;  
+  char slow;  
   int lives;
   int ammo;
   
@@ -14,13 +14,13 @@ class Rocket extends GameObject
     super(width * 0.5f, height  * 0.5f, 50);         
   }
   
-  Rocket(char move, char left, char right, char boost, float startX, float startY, color c)
+  Rocket(char move, char left, char right, char slow, float startX, float startY, color c)
   {
     super(startX, startY, 50);
     this.move = move;
     this.left = left;
     this.right = right;
-    this.boost = boost;
+    this.slow = slow;
     this.c = c;
     lives = 10;
     ammo = 10;
@@ -40,9 +40,9 @@ class Rocket extends GameObject
       pos.add(forward);
     }//end if
     
-    if (keys[boost]) 
+    if (keys[slow]) 
     {
-        speed = 12;
+        speed = 3;
     }//end if
     
     else
@@ -96,14 +96,28 @@ class Rocket extends GameObject
     if (keys[move])
     {
       //flames
-      int r = (int)random(150,255);
-      int g = (int)random(125);
+      if (keys[slow])
+      {
+        //flames
+        int r = (int)random(150,255);
+        int g = (int)random(125);
+        
+        stroke(r, g, 0);
+        fill(r, g, 0);
+        triangle(halfW+(.3*halfW), halfW/2, 1.75*halfW, 0, halfW+(.3*halfW), -halfW/2);
+      }//end if
       
-      stroke(r, g, 0);
-      fill(r, g, 0);
-      triangle(halfW+(.3*halfW), halfW/2, 2.25*halfW, 0, halfW+(.3*halfW), -halfW/2);
-    }
-    
+      else
+      {
+        //flames
+        int r = (int)random(150,255);
+        int g = (int)random(125);
+        
+        stroke(r, g, 0);
+        fill(r, g, 0);
+        triangle(halfW+(.3*halfW), halfW/2, 2.25*halfW, 0, halfW+(.3*halfW), -halfW/2);
+      }//end else
+    }    
     popMatrix();
   }   
 }

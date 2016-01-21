@@ -5,7 +5,7 @@ int[] brightness;
 
 //variables to determine comet amount
 int cometAmount = 10;
-int mineAmount = 4;
+int mineAmount = 2;
 boolean create = true;
 
 float sideLength;
@@ -86,26 +86,30 @@ void draw()
   //create the right amount of comets for the level
   createComet();
   
-  for(int i = ship.size() - 1 ; i >= 0   ;i --)
-  {
-    GameObject go = ship.get(i);
-    go.update();
-    go.render();
-  }//end for
+  //white comet
   for(int i = normalComet.size() - 1 ; i >= 0   ;i --)
   {
     GameObject go = normalComet.get(i);
     go.update();
     go.render();
   }//end for
+  
+  //gold comet
   for(int i = mineComet.size() - 1 ; i >= 0   ;i --)
   {
     GameObject go = mineComet.get(i);
     go.update();
     go.render();
+  }//end for
+  
+  //ship
+  for(int i = ship.size() - 1 ; i >= 0   ;i --)
+  {
+    GameObject go = ship.get(i);
+    go.update();
+    go.render();
   }//end for 
   
-  //println(numComets);
 }//end draw()
 
 void spawnPoint()
@@ -124,14 +128,14 @@ void createComet()
   {
     for(int i = 0; i < cometAmount-mineAmount; i++)
     {      
-      Comet comet = new Comet();
-      normalComet.add(comet);
+      Comet comet1 = new Comet();
+      normalComet.add(comet1);
     }//end for
     
     for(int i = 0; i < mineAmount; i++)
     {      
-      Comet comet = new Comet();
-      mineComet.add(comet);
+      MineComet comet2 = new MineComet();
+      mineComet.add(comet2);
       if(i == mineAmount-1)
       {
         create = false;
@@ -139,9 +143,22 @@ void createComet()
       stroke(255, 223, 0);
     }//end for
   }//end if
-
+  
+  checkCollisions();
 }//end createComet
 
+// Check every ship against every powerup
+void checkCollisions()
+{
+  for (int i = mineAmount; i < mineAmount - 1; i++)
+  {
+    if(Rocket.pos.dist(pos) == 0)
+    {
+      mineComet.remove(i);
+    }//end if
+    
+  }//end for
+}
 void stars()
 {
   for (int i = 0; i < height/1.5 ; i++)

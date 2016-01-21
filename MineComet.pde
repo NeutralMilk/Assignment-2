@@ -24,7 +24,7 @@ class MineComet extends GameObject
     translate(pos.x, pos.y);
     rotate(theta);    
     fill(f);
-    stroke(c);
+    stroke(255, 223, 0);
     strokeWeight(3);
     polygon(0, 0, size, sides); 
     popMatrix();
