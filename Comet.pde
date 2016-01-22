@@ -74,14 +74,14 @@ class Comet extends GameObject
       pos.x = 0;
     }//end if
     
-    if (pos.y < 0)
+    if (pos.y < (height/10)/2)
     {
       pos.y = height;
     }//end if
     
     if (pos.y > height)
     {
-      pos.y = 0;
+      pos.y = (height/10)/2;
     }//end if
 
   }//end update()

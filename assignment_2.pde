@@ -45,6 +45,12 @@ void setup()
   ship.add(rocket);
   
   //draw the stars initially
+  initialStars();
+  
+}//end setup()
+
+void initialStars()
+{
   for (int i = 0; i < height/1.5 ; i++)
   {
     brightness[i] = (int)random(5,255);
@@ -56,7 +62,7 @@ void setup()
     starY[i] = y;
   }//end for()
 
-}//end setup()
+}//end initialStars
 
 void loadData()
 {
@@ -110,6 +116,9 @@ void draw()
     go.render();
   }//end for 
   
+  stroke(255);
+  fill(255);
+  rect(0, 0, width, sideLength/2);
 }//end draw()
 
 void spawnPoint()
@@ -181,7 +190,15 @@ void checkCollisions()
           // Bounding circle collisions
           if (go.pos.dist(k.pos) < go.halfW + k.halfW)
           {
-            normalComet.remove(k);
+            normalComet.clear();
+            mineComet.clear();
+            
+            create = true;
+            createComet();
+            
+            ship.remove(0);
+            Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
+            ship.add(rocket);
           }
         }
       }
