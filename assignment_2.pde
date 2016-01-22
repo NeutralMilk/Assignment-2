@@ -6,6 +6,7 @@ int[] brightness;
 //variables to determine comet amount
 int cometAmount = 10;
 int mineAmount = 2;
+float goalSize = 10;
 boolean create = true;
 
 float sideLength;
@@ -17,8 +18,6 @@ int random;
 ArrayList<GameObject> ship = new ArrayList<GameObject>();
 ArrayList<GameObject> normalComet = new ArrayList<GameObject>();
 ArrayList<GameObject> mineComet = new ArrayList<GameObject>();
-
-ArrayList<LevelData> Data = new ArrayList<LevelData>();
 
 boolean[] keys = new boolean[512];
 
@@ -158,24 +157,27 @@ void createComet()
 
 void checkCollisions()
 {
-  //check ship against mineable comets
+   //check ship against mineable comets
  for(int i = ship.size() - 1 ; i >= 0; i --)
  {
-    GameObject go = ship.get(i);
-    if (go instanceof Rocket)
-    {
-      for(int j = mineComet.size() - 1 ; j >= 0   ;j --)
-      {
-        GameObject k = mineComet.get(j);
-        if (k instanceof MineComet) 
-          // Bounding circle collisions
-          if (go.pos.dist(k.pos) < go.halfW + k.halfW)
-          {
-            mineComet.remove(k);
-          }
-        }
-      }
- }
+   
+   GameObject go = ship.get(i);
+   if (go instanceof Rocket)
+   {
+     for(int j = mineComet.size() - 1 ; j >= 0   ;j --)
+     {
+       GameObject k = mineComet.get(j);
+       if (k instanceof MineComet) 
+         {
+           if (go.pos.dist(k.pos) < go.halfW + k.halfW)
+           {
+           mineComet.remove(k);
+         }//end if
+       }//end if
+     }//end for
+   }//end if
+ }///end for
+ 
  //check ship against dangerous comets
  for(int i = ship.size() - 1 ; i >= 0; i --)
  {
@@ -187,7 +189,6 @@ void checkCollisions()
         GameObject k = normalComet.get(j);
         if (k instanceof Comet)
         {
-          // Bounding circle collisions
           if (go.pos.dist(k.pos) < go.halfW + k.halfW)
           {
             normalComet.clear();
@@ -199,12 +200,13 @@ void checkCollisions()
             ship.remove(0);
             Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
             ship.add(rocket);
-          }
-        }
-      }
-    }
- } 
+          }//end if
+        }//end if
+      }//end for
+    }//end if
+ }//end for 
 }//end checkCollisions()
+
 void stars()
 {
   for (int i = 0; i < height/1.5 ; i++)
