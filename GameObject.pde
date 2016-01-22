@@ -11,6 +11,8 @@ abstract class GameObject
   color f;
   color gold;
   boolean mine;
+  int sides;
+  int size;
  
   GameObject()
   {

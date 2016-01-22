@@ -12,12 +12,14 @@ class Comet extends GameObject
     forward.y = random(-1, 1);
     forward.normalize();
     thetaDir = random(-0.015f, 0.015f);
+    sideLength = height/10;
+    border = sideLength/10;
+    sides = (int)random(3,10);
+    size = (int)random(10,40);
+    
   }
   
   // From the interface. This class won't compile unless it has this method  
-
-  int sides = (int)random(3,10);
-  int size = (int)random(10,40);
 
   void render()
   {
@@ -54,7 +56,7 @@ class Comet extends GameObject
     {
        pos.x = width;
     }//end if
-    
+
     if (pos.x > width)
     {
       pos.x = 0;
@@ -70,6 +72,11 @@ class Comet extends GameObject
       pos.y = (height/10)/2;
     }//end if
     
+    if (pos.x + size > width - sideLength - border && pos.x - size < width - border && pos.y + size > height/2 - sideLength/2 && pos.y - size < height/2 + sideLength/2)
+    {
+       pos.x = 0;
+       pos.y = 0;
+    }//end if
   }//end update()
   
 }//end class

@@ -8,6 +8,7 @@ int cometAmount = 50;
 int mineAmount = 5;
 float goalSize = 10;
 boolean create = true;
+String level = "level 1";
 
 float sideLength;
 float border;
@@ -113,12 +114,26 @@ void draw()
     GameObject go = ship.get(i);
     go.update();
     go.render();
-  }//end for 
+  }//end for
   
   stroke(255);
   fill(255);
   rect(0, 0, width, sideLength/2);
+  
+  //display level details
+  levelDetails();
 }//end draw()
+
+void levelDetails()
+{
+  textSize(32);
+  fill(0);
+  text(level, width/2, sideLength/4);   
+  
+  fill(0);
+  strok(255);
+  rect(width/4, sideLength/4
+}//end levelDetails()
 
 void spawnPoint()
 {
@@ -169,7 +184,7 @@ void checkCollisions()
        GameObject k = mineComet.get(j);
        if (k instanceof MineComet) 
          {
-           if (go.pos.dist(k.pos) < go.halfW + k.halfW)
+           if (go.pos.dist(k.pos) < go.size*1.2 + k.size*1.2)
            {
            mineComet.remove(k);
          }//end if
@@ -189,7 +204,7 @@ void checkCollisions()
         GameObject k = normalComet.get(j);
         if (k instanceof Comet)
         {
-          if (go.pos.dist(k.pos) < go.halfW + k.halfW)
+          if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
           {
             normalComet.clear();
             mineComet.clear();
