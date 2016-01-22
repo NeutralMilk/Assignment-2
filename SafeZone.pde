@@ -1,7 +1,14 @@
-/*class SafeZone extends LevelData
+class SafeZone extends LevelData
 {
   float x;
   float y;
+  float goalSize;
   
-  float this.
-}//end class*/
+  Rocket(float x, float y, float l)
+  {
+    this.goalSize= right;
+    this.x = move;
+    this.y = left;
+    
+  }
+}//end class
