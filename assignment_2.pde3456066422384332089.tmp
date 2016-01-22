@@ -4,8 +4,8 @@ int[] starY;
 int[] brightness;
 
 //variables to determine comet amount
-int cometAmount = 10;
-int mineAmount = 2;
+int cometAmount = 50;
+int mineAmount = 5;
 float goalSize = 10;
 boolean create = true;
 
@@ -205,6 +205,19 @@ void checkCollisions()
       }//end for
     }//end if
  }//end for 
+ 
+ for(int i = normalComet.size() - 1; i >= 0; i --)
+ {
+   GameObject k = normalComet.get(i);
+   if (k instanceof Comet)
+   {
+     if(k.pos.x < (width - sideLength - border) && k.pos.x > (width - border) && k.pos.y < (height - sideLength/2) && k.pos.y > (height + sideLength/2))
+     {
+       k.pos.x = random(width);
+       k.pos.y = random(height - sideLength/2);
+     }//end if
+   }//end if
+ }//end for
 }//end checkCollisions()
 
 void stars()
