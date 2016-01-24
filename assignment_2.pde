@@ -4,11 +4,11 @@ int[] starY;
 int[] brightness;
 
 //variables to determine comet amount
-int cometAmount = 50;
-int mineAmount = 5;
+int cometAmount = 0;
+int mineAmount = 0;
 float goalSize = 10;
 boolean create = true;
-String level = "level 1";
+String[] levelData;
 
 float sideLength;
 float border;
@@ -28,6 +28,7 @@ void setup()
   background(0);
   
   //load in level data
+  lyrics = loadStrings("levels.txt");
   loadData();
   
   //some variables that allow the stars to keep a constant position
@@ -66,7 +67,23 @@ void initialStars()
 
 void loadData()
 {
-  String[] data = loadStrings("levels.txt");
+  
+  //for loop to split the words up and put them in a new array
+  for(int i = 0; i < lyrics.length; i++)
+  {
+    //change everything to lowercase, replace full stops and commas with spaces and split at a space
+    String temp = trim(lyrics[i]).toLowerCase().replaceAll("\\.", "").replaceAll(",", "").replaceAll("\\?", "").replaceAll("!", "").replaceAll("\"", "");
+    String[] w = temp.split(",");
+    for(String s:w)
+    {
+      allWords.add(s);
+    }
+  }//end for
+  java.util.Collections.sort(allWords);
+  totalWords = allWords.size();
+  
+  wordFrequency();
+  
 }//end loadData()
 
 void keyPressed()
@@ -130,9 +147,13 @@ void levelDetails()
   fill(0);
   text(level, width/2, sideLength/4);   
   
-  fill(0);
-  strok(255);
-  rect(width/4, sideLength/4
+  fill(255);
+  strokeWeight(3);
+  stroke(0);
+  line((width/4 + border/4), (border), (width/4 + border), (border)); 
+  rect(width/4, sideLength/64, sideLength/4, sideLength/4);
+  
+  strokeWeight(1);
 }//end levelDetails()
 
 void spawnPoint()
