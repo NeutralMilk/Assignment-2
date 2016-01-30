@@ -4,9 +4,10 @@ int[] starY;
 int[] brightness;
 
 //variables to determine comet amount
-int cometAmount = 0;
-int mineAmount = 0;
-float goalSize = 10;
+int cometAmount = 10;
+int mineAmount = 2;
+int tntAmount = 0;
+float goalSize = 1;
 boolean create = true;
 String[] levelData;
 
@@ -19,17 +20,19 @@ int random;
 ArrayList<GameObject> ship = new ArrayList<GameObject>();
 ArrayList<GameObject> normalComet = new ArrayList<GameObject>();
 ArrayList<GameObject> mineComet = new ArrayList<GameObject>();
+ArrayList<GameObject> tntComet = new ArrayList<GameObject>();
+
 
 boolean[] keys = new boolean[512];
 
 void setup()
 {
-  size(1600,900);
+  fullScreen();
   background(0);
   
   //load in level data
-  lyrics = loadStrings("levels.txt");
-  loadData();
+  //lyrics = loadStrings("levels.txt");
+  //loadData();
   
   //some variables that allow the stars to keep a constant position
   int arraySize = (int)(height/1.5);
@@ -65,7 +68,7 @@ void initialStars()
 
 }//end initialStars
 
-void loadData()
+/*void loadData()
 {
   
   //for loop to split the words up and put them in a new array
@@ -84,7 +87,7 @@ void loadData()
   
   wordFrequency();
   
-}//end loadData()
+}//end loadData()*/
 
 void keyPressed()
 {
@@ -125,6 +128,13 @@ void draw()
     go.render();
   }//end for
   
+  for(int i = tntComet.size() - 1 ; i >= 0   ;i --)
+  {
+    GameObject go = tntComet.get(i);
+    go.update();
+    go.render();
+  }//end for
+  
   //ship
   for(int i = ship.size() - 1 ; i >= 0   ;i --)
   {
@@ -145,7 +155,7 @@ void levelDetails()
 {
   textSize(32);
   fill(0);
-  text(level, width/2, sideLength/4);   
+  text("level", width/2, sideLength/4);   
   
   fill(255);
   strokeWeight(3);
@@ -170,16 +180,22 @@ void createComet()
 {
   if (create == true)
   {
-    for(int i = 0; i < cometAmount-mineAmount; i++)
+    for(int i = 0; i < cometAmount-mineAmount-tntAmount; i++)
     {      
       Comet comet1 = new Comet();
       normalComet.add(comet1);
     }//end for
     
+    for(int i = 0; i < tntAmount; i++)
+    {      
+      TNTComet comet2 = new TNTComet();
+      tntComet.add(comet2);
+    }//end for
+    
     for(int i = 0; i < mineAmount; i++)
     {      
-      MineComet comet2 = new MineComet();
-      mineComet.add(comet2);
+      MineComet comet3 = new MineComet();
+      mineComet.add(comet3);
       if(i == mineAmount-1)
       {
         create = false;
@@ -193,7 +209,7 @@ void createComet()
 
 void checkCollisions()
 {
-   //check ship against mineable comets
+ //check ship against mineable comets
  for(int i = ship.size() - 1 ; i >= 0; i --)
  {
    
@@ -229,7 +245,8 @@ void checkCollisions()
           {
             normalComet.clear();
             mineComet.clear();
-            
+            tntComet.clear();
+       
             create = true;
             createComet();
             
@@ -240,7 +257,36 @@ void checkCollisions()
         }//end if
       }//end for
     }//end if
- }//end for 
+  }//end for
+   
+ //check ship against tnt comets
+ for(int i = ship.size() - 1 ; i >= 0; i --)
+ {
+    GameObject go = ship.get(i);
+    if (go instanceof Rocket)
+    {
+      for(int j = tntComet.size() - 1 ; j >= 0   ;j --)
+      {
+        GameObject k = tntComet.get(j);
+        if (k instanceof Comet)
+        {
+          if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
+          {
+            normalComet.clear();
+            mineComet.clear();
+            tntComet.clear();
+            
+            create = true;
+            createComet();
+            
+            ship.remove(0);
+            Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
+            ship.add(rocket);
+          }//end if
+        }//end if
+      }//end for
+    }//end if 
+ }//end for
  
  for(int i = normalComet.size() - 1; i >= 0; i --)
  {

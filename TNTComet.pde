@@ -1,10 +1,10 @@
-class MineComet extends GameObject
+class TNTComet extends GameObject
 {
   float thetaDir;
-  MineComet()
+  TNTComet()
   {
     super(random(0, width), random(0, height), 50);    
-    c = color(255, 223, 0);
+    c = color(255, 0, 0);
     f = 0;
     mine = true;
     forward.x = random(-1, 1);
