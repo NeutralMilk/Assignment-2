@@ -1,15 +1,15 @@
+
 //variables about stars
 int[] starX;
 int[] starY;
 int[] brightness;
 
 //variables to determine comet amount
-int cometAmount = 10;
-int mineAmount = 2;
-int tntAmount = 0;
-float goalSize = 1;
+int cometAmount;
+int mineAmount;
+int tntAmount;
+float goalSize;
 boolean create = true;
-String[] levelData;
 
 float sideLength;
 float border;
@@ -21,6 +21,8 @@ ArrayList<GameObject> ship = new ArrayList<GameObject>();
 ArrayList<GameObject> normalComet = new ArrayList<GameObject>();
 ArrayList<GameObject> mineComet = new ArrayList<GameObject>();
 ArrayList<GameObject> tntComet = new ArrayList<GameObject>();
+ArrayList<String> levelData = new ArrayList <String>();
+String[] levelText;
 
 
 boolean[] keys = new boolean[512];
@@ -31,8 +33,8 @@ void setup()
   background(0);
   
   //load in level data
-  //lyrics = loadStrings("levels.txt");
-  //loadData();
+  levelText = loadStrings("levels.txt");
+  loadData();
   
   //some variables that allow the stars to keep a constant position
   int arraySize = (int)(height/1.5);
@@ -52,52 +54,6 @@ void setup()
   initialStars();
   
 }//end setup()
-
-void initialStars()
-{
-  for (int i = 0; i < height/1.5 ; i++)
-  {
-    brightness[i] = (int)random(5,255);
-    stroke(brightness[i]);
-    int x = (int)random(width);
-    int y = (int)random(height);
-    point(x, y);
-    starX[i] = x;
-    starY[i] = y;
-  }//end for()
-
-}//end initialStars
-
-/*void loadData()
-{
-  
-  //for loop to split the words up and put them in a new array
-  for(int i = 0; i < lyrics.length; i++)
-  {
-    //change everything to lowercase, replace full stops and commas with spaces and split at a space
-    String temp = trim(lyrics[i]).toLowerCase().replaceAll("\\.", "").replaceAll(",", "").replaceAll("\\?", "").replaceAll("!", "").replaceAll("\"", "");
-    String[] w = temp.split(",");
-    for(String s:w)
-    {
-      allWords.add(s);
-    }
-  }//end for
-  java.util.Collections.sort(allWords);
-  totalWords = allWords.size();
-  
-  wordFrequency();
-  
-}//end loadData()*/
-
-void keyPressed()
-{
-  keys[keyCode] = true;
-}
-
-void keyReleased()
-{
-  keys[keyCode] = false;
-}
 
 void draw()
 {
@@ -150,6 +106,48 @@ void draw()
   //display level details
   levelDetails();
 }//end draw()
+
+void initialStars()
+{
+  for (int i = 0; i < height/1.5 ; i++)
+  {
+    brightness[i] = (int)random(5,255);
+    stroke(brightness[i]);
+    int x = (int)random(width);
+    int y = (int)random(height);
+    point(x, y);
+    starX[i] = x;
+    starY[i] = y;
+  }//end for()
+
+}//end initialStars
+
+void loadData()
+{
+  
+  //for loop to split the words up and put them in a new array
+  for(int i = 0; i < levelText.length; i++)
+  {
+    //change everything to lowercase, replace full stops and commas with spaces and split at a space
+    String temp = levelText[i];
+    String[] w = temp.split(",");
+    for(String s:w)
+    {
+      levelData.add(s);
+    }//end for
+  }//end for
+  
+}//end loadData()
+
+void keyPressed()
+{
+  keys[keyCode] = true;
+}
+
+void keyReleased()
+{
+  keys[keyCode] = false;
+}
 
 void levelDetails()
 {
