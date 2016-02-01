@@ -5,10 +5,11 @@ int[] starY;
 int[] brightness;
 
 //variables to determine comet amount
+String level;
 int cometAmount;
 int mineAmount;
 int tntAmount;
-float goalSize;
+int goalSize;
 boolean create = true;
 
 float sideLength;
@@ -59,6 +60,13 @@ void draw()
 {
   background(0);
   
+  stroke(255);
+  fill(255);
+  rect(0, 0, width, sideLength/2);
+  
+  //set up level
+  levelConfig();
+  
   //draw the spawn point
   spawnPoint();
   
@@ -98,14 +106,32 @@ void draw()
     go.update();
     go.render();
   }//end for
-  
-  stroke(255);
-  fill(255);
-  rect(0, 0, width, sideLength/2);
-  
-  //display level details
-  levelDetails();
 }//end draw()
+
+void levelConfig()
+{    
+  String level = levelData.get(0);
+  int cometAmount = Integer.parseInt(levelData.get(1));
+  int mineAmount = Integer.parseInt(levelData.get(2));
+  int tntAmount = Integer.parseInt(levelData.get(3));
+  int goalSize = Integer.parseInt(levelData.get(4));
+  
+  float textBorder = height/8;
+  textSize(32);
+  fill(0);
+  text(level, width/2, sideLength/3);
+  text(cometAmount, width/2+textBorder, sideLength/3);
+  text(mineAmount, width/2+(textBorder*2), sideLength/3);
+  text(tntAmount, width/2+(textBorder*3), sideLength/3);
+
+  fill(255);
+  strokeWeight(3);
+  stroke(0);
+  //line((width/4 + border/4), (border), (width/4 + border), (border)); 
+  rect(width/4, sideLength/8, sideLength/4, sideLength/4);
+  
+  strokeWeight(1);
+}//end levelConfig
 
 void initialStars()
 {
@@ -148,21 +174,6 @@ void keyReleased()
 {
   keys[keyCode] = false;
 }
-
-void levelDetails()
-{
-  textSize(32);
-  fill(0);
-  text("level", width/2, sideLength/4);   
-  
-  fill(255);
-  strokeWeight(3);
-  stroke(0);
-  line((width/4 + border/4), (border), (width/4 + border), (border)); 
-  rect(width/4, sideLength/64, sideLength/4, sideLength/4);
-  
-  strokeWeight(1);
-}//end levelDetails()
 
 void spawnPoint()
 {
