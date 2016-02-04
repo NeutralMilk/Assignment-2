@@ -4,6 +4,11 @@ int[] starX;
 int[] starY;
 int[] brightness;
 
+float sideLength;
+float border;
+
+int random;
+
 //variables to determine comet amount
 String level;
 int cometAmount;
@@ -11,11 +16,6 @@ int mineAmount;
 int tntAmount;
 int goalSize;
 boolean create = true;
-
-float sideLength;
-float border;
-
-int random;
 
 //arraylist for game objects and loading the data
 ArrayList<GameObject> ship = new ArrayList<GameObject>();
@@ -56,82 +56,29 @@ void setup()
   
 }//end setup()
 
-void draw()
+void loadData()
 {
-  background(0);
   
-  stroke(255);
-  fill(255);
-  rect(0, 0, width, sideLength/2);
-  
-  //set up level
-  levelConfig();
-  
-  //draw the spawn point
-  spawnPoint();
-  
-  //refresh the stars
-  stars();
-  
-  //create the right amount of comets for the level
-  createComet();
-  
-  //white comet
-  for(int i = normalComet.size() - 1 ; i >= 0   ;i --)
+  //for loop to split the words up and put them in a new array
+  for(int i = 0; i < levelText.length; i++)
   {
-    GameObject go = normalComet.get(i);
-    go.update();
-    go.render();
+    //change everything to lowercase, replace full stops and commas with spaces and split at a space
+    String temp = levelText[i];
+    String[] w = temp.split(",");
+    for(String s:w)
+    {
+      levelData.add(s);
+    }//end for
   }//end for
-  
-  //gold comet
-  for(int i = mineComet.size() - 1 ; i >= 0   ;i --)
+  for(int i = 0; i < levelData.size(); i+= 5)
   {
-    GameObject go = mineComet.get(i);
-    go.update();
-    go.render();
+    String level = levelData.get(i);
+    int cometAmount = Integer.parseInt(levelData.get(i+1));
+    int mineAmount = Integer.parseInt(levelData.get(i+2));
+    int tntAmount = Integer.parseInt(levelData.get(i+3));
+    int goalSize = Integer.parseInt(levelData.get(i+4));
   }//end for
-  
-  for(int i = tntComet.size() - 1 ; i >= 0   ;i --)
-  {
-    GameObject go = tntComet.get(i);
-    go.update();
-    go.render();
-  }//end for
-  
-  //ship
-  for(int i = ship.size() - 1 ; i >= 0   ;i --)
-  {
-    GameObject go = ship.get(i);
-    go.update();
-    go.render();
-  }//end for
-}//end draw()
-
-void levelConfig()
-{    
-  String level = levelData.get(0);
-  int cometAmount = Integer.parseInt(levelData.get(1));
-  int mineAmount = Integer.parseInt(levelData.get(2));
-  int tntAmount = Integer.parseInt(levelData.get(3));
-  int goalSize = Integer.parseInt(levelData.get(4));
-  
-  float textBorder = height/8;
-  textSize(32);
-  fill(0);
-  text(level, width/2, sideLength/3);
-  text(cometAmount, width/2+textBorder, sideLength/3);
-  text(mineAmount, width/2+(textBorder*2), sideLength/3);
-  text(tntAmount, width/2+(textBorder*3), sideLength/3);
-
-  fill(255);
-  strokeWeight(3);
-  stroke(0);
-  //line((width/4 + border/4), (border), (width/4 + border), (border)); 
-  rect(width/4, sideLength/8, sideLength/4, sideLength/4);
-  
-  strokeWeight(1);
-}//end levelConfig
+}//end loadData()
 
 void initialStars()
 {
@@ -148,22 +95,77 @@ void initialStars()
 
 }//end initialStars
 
-void loadData()
+void draw()
 {
+  background(0);
   
-  //for loop to split the words up and put them in a new array
-  for(int i = 0; i < levelText.length; i++)
+  stroke(255);
+  fill(255);
+  rect(0, 0, width, sideLength/2);
+  
+  //set up level
+  //levelConfig();
+  
+  //draw the spawn point
+  spawnPoint();
+  
+  //refresh the stars
+  stars();
+  
+  //create the right amount of comets for the level
+  createComet();
+  
+  //white comet
+  for(int i = normalComet.size() - 1 ; i >= 0 ; i --)
   {
-    //change everything to lowercase, replace full stops and commas with spaces and split at a space
-    String temp = levelText[i];
-    String[] w = temp.split(",");
-    for(String s:w)
-    {
-      levelData.add(s);
-    }//end for
+    GameObject go = normalComet.get(i);
+    go.update();
+    go.render();
   }//end for
   
-}//end loadData()
+  //gold comet
+  for(int i = mineComet.size() - 1 ; i >= 0 ; i --)
+  {
+    GameObject go = mineComet.get(i);
+    go.update();
+    go.render();
+  }//end for
+  
+  for(int i = tntComet.size() - 1 ; i >= 0 ; i --)
+  {
+    GameObject go = tntComet.get(i);
+    go.update();
+    go.render();
+  }//end for
+  
+  //ship
+  for(int i = ship.size() - 1 ; i >= 0   ;i --)
+  {
+    GameObject go = ship.get(i);
+    go.update();
+    go.render();
+  }//end for
+}//end draw()
+
+/*void levelConfig()
+{    
+  
+  float textBorder = height/8;
+  textSize(32);
+  fill(0);
+  text(level, width/2, sideLength/3);
+  text(cometAmount, width/2+textBorder, sideLength/3);
+  text(mineAmount, width/2+(textBorder*2), sideLength/3);
+  text(tntAmount, width/2+(textBorder*3), sideLength/3);
+
+  fill(255);
+  strokeWeight(3);
+  stroke(0);
+  //line((width/4 + border/4), (border), (width/4 + border), (border)); 
+  rect(width/4, sideLength/8, sideLength/4, sideLength/4);
+  
+  strokeWeight(1);
+}//end levelConfig*/
 
 void keyPressed()
 {
@@ -188,7 +190,7 @@ void spawnPoint()
 void createComet()
 {
   if (create == true)
-  {
+    {
     for(int i = 0; i < cometAmount-mineAmount-tntAmount; i++)
     {      
       Comet comet1 = new Comet();
