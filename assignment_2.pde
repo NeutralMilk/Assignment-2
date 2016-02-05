@@ -73,10 +73,10 @@ void loadData()
   for(int i = 0; i < levelData.size(); i+= 5)
   {
     String level = levelData.get(i);
-    int cometAmount = Integer.parseInt(levelData.get(i+1));
-    int mineAmount = Integer.parseInt(levelData.get(i+2));
-    int tntAmount = Integer.parseInt(levelData.get(i+3));
-    int goalSize = Integer.parseInt(levelData.get(i+4));
+    cometAmount.add(Integer.parseInt(levelData.get(i+1)));
+    mineAmount.add(Integer.parseInt(levelData.get(i+2)));
+    tntAmount.add(Integer.parseInt(levelData.get(i+3)));
+    goalSize.add(Integer.parseInt(levelData.get(i+4)));
     
     println(level);
     println(cometAmount);
@@ -110,7 +110,7 @@ void draw()
   rect(0, 0, width, sideLength/2);
   
   //set up level
-  levelConfig();
+  //levelConfig();
   
   //draw the spawn point
   spawnPoint();
