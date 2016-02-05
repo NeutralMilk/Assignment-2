@@ -10,11 +10,11 @@ float border;
 int random;
 
 //variables to determine comet amount
-String level;
-int cometAmount;
-int mineAmount;
-int tntAmount;
-int goalSize;
+ArrayList<String> level = new ArrayList<String>();
+ArrayList<Integer> cometAmount = new ArrayList<Integer>();
+ArrayList<Integer> mineAmount = new ArrayList<Integer>();
+ArrayList<Integer> tntAmount = new ArrayList<Integer>();
+ArrayList<Integer> goalSize = new ArrayList<Integer>();
 boolean create = true;
 
 //arraylist for game objects and loading the data
@@ -77,6 +77,12 @@ void loadData()
     int mineAmount = Integer.parseInt(levelData.get(i+2));
     int tntAmount = Integer.parseInt(levelData.get(i+3));
     int goalSize = Integer.parseInt(levelData.get(i+4));
+    
+    println(level);
+    println(cometAmount);
+    println(mineAmount);
+    println(tntAmount);
+    println(goalSize);
   }//end for
 }//end loadData()
 
@@ -104,7 +110,7 @@ void draw()
   rect(0, 0, width, sideLength/2);
   
   //set up level
-  //levelConfig();
+  levelConfig();
   
   //draw the spawn point
   spawnPoint();
@@ -147,16 +153,16 @@ void draw()
   }//end for
 }//end draw()
 
-/*void levelConfig()
+void levelConfig()
 {    
   
   float textBorder = height/8;
   textSize(32);
   fill(0);
-  text(level, width/2, sideLength/3);
-  text(cometAmount, width/2+textBorder, sideLength/3);
-  text(mineAmount, width/2+(textBorder*2), sideLength/3);
-  text(tntAmount, width/2+(textBorder*3), sideLength/3);
+  text(level.get(1), width/2, sideLength/3);
+  text(cometAmount.get(1), width/2+textBorder, sideLength/3);
+  text(mineAmount.get(1), width/2+(textBorder*2), sideLength/3);
+  text(tntAmount.get(1), width/2+(textBorder*3), sideLength/3);
 
   fill(255);
   strokeWeight(3);
@@ -165,7 +171,7 @@ void draw()
   rect(width/4, sideLength/8, sideLength/4, sideLength/4);
   
   strokeWeight(1);
-}//end levelConfig*/
+}//end levelConfig
 
 void keyPressed()
 {
@@ -191,23 +197,23 @@ void createComet()
 {
   if (create == true)
     {
-    for(int i = 0; i < cometAmount-mineAmount-tntAmount; i++)
+    for(int i = 0; i < cometAmount.get(1)-mineAmount.get(1)-tntAmount.get(1); i++)
     {      
       Comet comet1 = new Comet();
       normalComet.add(comet1);
     }//end for
     
-    for(int i = 0; i < tntAmount; i++)
+    for(int i = 0; i < tntAmount.get(1); i++)
     {      
       TNTComet comet2 = new TNTComet();
       tntComet.add(comet2);
     }//end for
     
-    for(int i = 0; i < mineAmount; i++)
+    for(int i = 0; i < mineAmount.get(1); i++)
     {      
       MineComet comet3 = new MineComet();
       mineComet.add(comet3);
-      if(i == mineAmount-1)
+      if(i == mineAmount.get(1)-1)
       {
         create = false;
       }//end
