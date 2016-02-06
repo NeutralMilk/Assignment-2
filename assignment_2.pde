@@ -105,21 +105,14 @@ void draw()
 {
   background(0);
   
-  stroke(255);
-  fill(255);
-  rect(0, 0, width, sideLength/2);
-  
-  //set up level
-  levelInfo();
+  //create the right amount of comets for the level
+  createComet();
   
   //draw the spawn point
   spawnPoint();
   
   //refresh the stars
   stars();
-  
-  //create the right amount of comets for the level
-  createComet();
   
   //white comet
   for(int i = normalComet.size() - 1 ; i >= 0 ; i --)
@@ -151,7 +144,16 @@ void draw()
     go.update();
     go.render();
   }//end for
+  
+  stroke(255);
+  fill(255);
+  rect(0, 0, width, sideLength/2);
+  
+  //set up level
+  levelInfo();
 }//end draw()
+
+int levelIndex = 0;
 
 void levelInfo()
 {    
@@ -159,10 +161,10 @@ void levelInfo()
   float textBorder = height/8;
   textSize(32);
   fill(0);
-  text(level.get(0), width/2, sideLength/3);
-  text(cometAmount.get(0), width/2+textBorder, sideLength/3);
-  text(mineAmount.get(0), width/2+(textBorder*2), sideLength/3);
-  text(tntAmount.get(0), width/2+(textBorder*3), sideLength/3);
+  text(level.get(levelIndex), width/2, sideLength/3);
+  text(cometAmount.get(levelIndex), width/2+textBorder, sideLength/3);
+  text(mineAmount.get(levelIndex), width/2+(textBorder*2), sideLength/3);
+  text(tntAmount.get(levelIndex), width/2+(textBorder*3), sideLength/3);
 
   fill(255);
   strokeWeight(3);
@@ -196,31 +198,30 @@ void spawnPoint()
 void createComet()
 {
   if (create == true)
-    {
-    for(int i = 0; i < cometAmount.get(1)-mineAmount.get(1)-tntAmount.get(1); i++)
+  {
+    for(int i = 0; i < cometAmount.get(levelIndex)-mineAmount.get(levelIndex)-tntAmount.get(levelIndex); i++)
     {      
       Comet comet1 = new Comet();
       normalComet.add(comet1);
     }//end for
     
-    for(int i = 0; i < tntAmount.get(1); i++)
+    for(int i = 0; i < tntAmount.get(levelIndex); i++)
     {      
       TNTComet comet2 = new TNTComet();
       tntComet.add(comet2);
     }//end for
     
-    for(int i = 0; i < mineAmount.get(1); i++)
+    for(int i = 0; i < mineAmount.get(levelIndex); i++)
     {      
       MineComet comet3 = new MineComet();
       mineComet.add(comet3);
-      if(i == mineAmount.get(1)-1)
+      if(i == mineAmount.get(levelIndex)-1)
       {
         create = false;
       }//end
       stroke(255, 223, 0);
-    }//end for
-  }//end if
-  
+    }//end for  
+  }
   checkCollisions();
 }//end createComet
 
