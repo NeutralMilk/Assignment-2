@@ -10,7 +10,7 @@ float border;
 int random;
 
 //variables to determine comet amount
-ArrayList<String> level = new ArrayList<String>();
+StringList level = new StringList();
 ArrayList<Integer> cometAmount = new ArrayList<Integer>();
 ArrayList<Integer> mineAmount = new ArrayList<Integer>();
 ArrayList<Integer> tntAmount = new ArrayList<Integer>();
@@ -72,7 +72,7 @@ void loadData()
   }//end for
   for(int i = 0; i < levelData.size(); i+= 5)
   {
-    String level = levelData.get(i);
+    level.append(levelData.get(i));
     cometAmount.add(Integer.parseInt(levelData.get(i+1)));
     mineAmount.add(Integer.parseInt(levelData.get(i+2)));
     tntAmount.add(Integer.parseInt(levelData.get(i+3)));
@@ -110,7 +110,7 @@ void draw()
   rect(0, 0, width, sideLength/2);
   
   //set up level
-  //levelConfig();
+  levelInfo();
   
   //draw the spawn point
   spawnPoint();
@@ -153,16 +153,16 @@ void draw()
   }//end for
 }//end draw()
 
-void levelConfig()
+void levelInfo()
 {    
   
   float textBorder = height/8;
   textSize(32);
   fill(0);
-  text(level.get(1), width/2, sideLength/3);
-  text(cometAmount.get(1), width/2+textBorder, sideLength/3);
-  text(mineAmount.get(1), width/2+(textBorder*2), sideLength/3);
-  text(tntAmount.get(1), width/2+(textBorder*3), sideLength/3);
+  text(level.get(0), width/2, sideLength/3);
+  text(cometAmount.get(0), width/2+textBorder, sideLength/3);
+  text(mineAmount.get(0), width/2+(textBorder*2), sideLength/3);
+  text(tntAmount.get(0), width/2+(textBorder*3), sideLength/3);
 
   fill(255);
   strokeWeight(3);
