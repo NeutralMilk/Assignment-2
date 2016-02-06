@@ -114,6 +114,9 @@ void draw()
   //refresh the stars
   stars();
   
+  //checking if a level is completed
+  levelComplete();
+  
   //white comet
   for(int i = normalComet.size() - 1 ; i >= 0 ; i --)
   {
@@ -155,6 +158,17 @@ void draw()
 
 int levelIndex = 0;
 
+void levelComplete()
+{
+  float h = (height + sideLength) / 2;
+  int l = goalSize.get(levelIndex);
+  if (collected == mineAmount.get(levelIndex))
+  {
+    fill(0,255,0);
+    stroke(0,255,0);
+    rect(0, h - l/2, 10, l);
+  }//end if
+}//end levelComplete()
 void levelInfo()
 {    
   
@@ -188,7 +202,7 @@ void keyReleased()
 void spawnPoint()
 {
   strokeWeight(3);
-  stroke(0,125,255);
+  stroke(100, 50 ,255);
   fill(0);  
   rect(width-sideLength-border, (height/2)-(sideLength/2), sideLength, sideLength);
   stroke(255);
@@ -225,6 +239,7 @@ void createComet()
   checkCollisions();
 }//end createComet
 
+int collected = 0;
 void checkCollisions()
 {
  //check ship against mineable comets
@@ -240,10 +255,11 @@ void checkCollisions()
        if (k instanceof MineComet) 
          {
            if (go.pos.dist(k.pos) < go.size*1.2 + k.size*1.2)
-           {
-           mineComet.remove(k);
+           {      
+              mineComet.remove(k);
+              collected++;
+           }//end if
          }//end if
-       }//end if
      }//end for
    }//end if
  }///end for
@@ -264,7 +280,8 @@ void checkCollisions()
             normalComet.clear();
             mineComet.clear();
             tntComet.clear();
-       
+            
+            collected = 0;
             create = true;
             createComet();
             
