@@ -60,7 +60,6 @@ class Rocket extends GameObject
       theta += 0.15f;
     }//end if   
     
-    
     //allow top and bottom to wrap around but not left and right
     if (pos.x < 0)
     {

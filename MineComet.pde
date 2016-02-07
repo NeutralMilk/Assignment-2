@@ -12,7 +12,7 @@ class MineComet extends GameObject
     forward.normalize();
     thetaDir = random(-0.015f, 0.015f);
     sides = (int)random(3,10);
-    size = (int)random(10,40);
+    size = (int)random(20,40);
   }
   
   // From the interface. This class won't compile unless it has this method  

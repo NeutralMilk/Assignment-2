@@ -112,18 +112,18 @@ void draw()
   //checking if a level is completed
   levelComplete();
   
-  //white comet
-  for(int i = normalComet.size() - 1 ; i >= 0 ; i --)
-  {
-    GameObject go = normalComet.get(i);
-    go.update();
-    go.render();
-  }//end for
-  
   //gold comet
   for(int i = mineComet.size() - 1 ; i >= 0 ; i --)
   {
     GameObject go = mineComet.get(i);
+    go.update();
+    go.render();
+  }//end for
+  
+  //white comet
+  for(int i = normalComet.size() - 1 ; i >= 0 ; i --)
+  {
+    GameObject go = normalComet.get(i);
     go.update();
     go.render();
   }//end for
@@ -136,12 +136,9 @@ void draw()
   }//end for
   
   //ship
-  for(int i = ship.size() - 1 ; i >= 0   ;i --)
-  {
-    GameObject go = ship.get(i);
+    GameObject go = ship.get(0);
     go.update();
     go.render();
-  }//end for
   
   stroke(255);
   fill(255);
@@ -152,25 +149,25 @@ void draw()
 }//end draw()
 
 int levelIndex = 0;
-
 void levelComplete()
 {
   float h = (height + sideLength) / 2;
   int l = goalSize.get(levelIndex);
+  
   if (collected == mineAmount.get(levelIndex))
-  {
+  { 
     fill(0,255,0);
     stroke(0,255,0);
     rect(0, h - l/2, 10, l);
     
-   GameObject go = ship.get(0);
-   if(go.pos.x < 10 && go.pos.y < h-l/2 && go.pos.y > h - l/2 + l); 
-   { 
-      levelIndex++;
+    GameObject go = ship.get(0);
+    if(go.pos.x > 0 && go.pos.x < 20 && go.pos.y > h-l/2 && go.pos.y < h - l/2 + l)
+    {
+      levelIndex ++;
+      
       normalComet.clear();
       mineComet.clear();
       tntComet.clear();
-      
       create = true;
       createComet();
       
@@ -178,7 +175,8 @@ void levelComplete()
       Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
       ship.add(rocket);
       collected = 0;
-   }//end if
+  
+    }//end if
   }//end if
 }//end levelComplete()
 void levelInfo()
