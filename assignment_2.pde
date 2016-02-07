@@ -161,7 +161,7 @@ void levelComplete()
     rect(0, h - l/2, 10, l);
     
     GameObject go = ship.get(0);
-    if(go.pos.x > 0 && go.pos.x < 20 && go.pos.y > h-l/2 && go.pos.y < h - l/2 + l)
+    if(go.pos.x > -1 && go.pos.x < 20 && go.pos.y > h-l/2 && go.pos.y < h - l/2 + l)
     {
       levelIndex ++;
       
@@ -252,15 +252,13 @@ void createComet()
 int collected = 0;
 void checkCollisions()
 {
- //check ship against mineable comets
  for(int i = ship.size() - 1 ; i >= 0; i --)
  {
-   
-   GameObject go = ship.get(i);
-   if (go instanceof Rocket)
-   {
-     for(int j = mineComet.size() - 1 ; j >= 0   ;j --)
-     {
+    GameObject go = ship.get(0);
+    
+    //check for mineables
+    for(int j = mineComet.size() - 1 ; j >= 0   ;j --)
+    {
        GameObject k = mineComet.get(j);
        if (k instanceof MineComet) 
          {
@@ -270,79 +268,62 @@ void checkCollisions()
               collected++;
            }//end if
          }//end if
-     }//end for
-   }//end if
- }///end for
- 
- //check ship against dangerous comets
- for(int i = ship.size() - 1 ; i >= 0; i --)
- {
-    GameObject go = ship.get(i);
-    if (go instanceof Rocket)
-    {
-      for(int j = normalComet.size() - 1 ; j >= 0   ;j --)
-      {
-        GameObject k = normalComet.get(j);
-        if (k instanceof Comet)
-        {
-          if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
-          {
-            normalComet.clear();
-            mineComet.clear();
-            tntComet.clear();
-            
-            collected = 0;
-            create = true;
-            createComet();
-            
-            ship.remove(0);
-            Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
-            ship.add(rocket);
-          }//end if
-        }//end if
-      }//end for
-    }//end if
-  }//end for
+    }//end for
    
- //check ship against tnt comets
- for(int i = ship.size() - 1 ; i >= 0; i --)
- {
-    GameObject go = ship.get(i);
-    if (go instanceof Rocket)
+    //check for white comets
+    for(int j = normalComet.size() - 1 ; j >= 0   ;j --)
     {
-      for(int j = tntComet.size() - 1 ; j >= 0   ;j --)
+      GameObject k = normalComet.get(j);
+      if (k instanceof Comet)
       {
-        GameObject k = tntComet.get(j);
-        if (k instanceof Comet)
+        if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
         {
-          if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
-          {
-            normalComet.clear();
-            mineComet.clear();
-            tntComet.clear();
-            
-            create = true;
-            createComet();
-            
-            ship.remove(0);
-            Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
-            ship.add(rocket);
-          }//end if
+          normalComet.clear();
+          mineComet.clear();
+          tntComet.clear();
+          
+          collected = 0;
+          create = true;
+          createComet();
+          
+          ship.remove(0);
+          Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
+          ship.add(rocket);
         }//end if
-      }//end for
-    }//end if 
- }//end for
- 
+      }//end if
+    }//end for
+    
+    //check for tnt comets
+    for(int j = tntComet.size() - 1 ; j >= 0   ;j --)
+    {
+      GameObject k = tntComet.get(j);
+      if (k instanceof Comet)
+      {
+        if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
+        {
+          normalComet.clear();
+          mineComet.clear();
+          tntComet.clear();
+          
+          collected = 0;
+          create = true;
+          createComet();
+          
+          ship.remove(0);
+          Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
+          ship.add(rocket);
+        }//end if
+      }//end if
+    }//end for
+  }//end for
+  
  for(int i = normalComet.size() - 1; i >= 0; i --)
  {
    GameObject k = normalComet.get(i);
-   if (k instanceof Comet)
+   if(k.pos.x < (width - sideLength - border) && k.pos.x > (width - border) && k.pos.y < (height - sideLength/2) && k.pos.y > (height + sideLength/2))
    {
-     if(k.pos.x < (width - sideLength - border) && k.pos.x > (width - border) && k.pos.y < (height - sideLength/2) && k.pos.y > (height + sideLength/2))
-     {
-       k.pos.x = random(width);
-       k.pos.y = random(height - sideLength/2);
-     }//end if
+     k.pos.x = random(width);
+     k.pos.y = random(height - sideLength/2);
    }//end if
  }//end for
 }//end checkCollisions()
