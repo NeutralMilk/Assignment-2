@@ -297,17 +297,18 @@ void checkCollisions()
     for(int j = tntComet.size() - 1 ; j >= 0   ;j --)
     {
       GameObject k = tntComet.get(j);
-      if (k instanceof Comet)
+      if (k instanceof TNTComet)
       {
         if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
         {
+          levelIndex--;
           normalComet.clear();
           mineComet.clear();
           tntComet.clear();
           
           collected = 0;
           create = true;
-          createComet();
+          createComet();        
           
           ship.remove(0);
           Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
