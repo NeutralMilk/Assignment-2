@@ -78,11 +78,6 @@ void loadData()
     tntAmount.add(Integer.parseInt(levelData.get(i+3)));
     goalSize.add(Integer.parseInt(levelData.get(i+4)));
     
-    println(level);
-    println(cometAmount);
-    println(mineAmount);
-    println(tntAmount);
-    println(goalSize);
   }//end for
 }//end loadData()
 
@@ -156,7 +151,7 @@ void draw()
   levelInfo();
 }//end draw()
 
-int levelIndex = 0;
+int levelIndex = 7;
 
 void levelComplete()
 {
