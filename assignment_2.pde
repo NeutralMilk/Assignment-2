@@ -151,7 +151,7 @@ void draw()
   levelInfo();
 }//end draw()
 
-int levelIndex = 7;
+int levelIndex = 0;
 
 void levelComplete()
 {
@@ -162,6 +162,23 @@ void levelComplete()
     fill(0,255,0);
     stroke(0,255,0);
     rect(0, h - l/2, 10, l);
+    
+   GameObject go = ship.get(0);
+   if(go.pos.x < 10 && go.pos.y < h-l/2 && go.pos.y > h - l/2 + l); 
+   { 
+      levelIndex++;
+      normalComet.clear();
+      mineComet.clear();
+      tntComet.clear();
+      
+      create = true;
+      createComet();
+      
+      ship.remove(0);
+      Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
+      ship.add(rocket);
+      collected = 0;
+   }//end if
   }//end if
 }//end levelComplete()
 void levelInfo()
