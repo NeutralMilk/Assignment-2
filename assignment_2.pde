@@ -96,56 +96,93 @@ void initialStars()
 
 }//end initialStars
 
+boolean menu = true;
+
 void draw()
 {
-  background(0);
-  
-  //create the right amount of comets for the level
-  createComet();
-  
-  //draw the spawn point
-  spawnPoint();
-  
-  //refresh the stars
-  stars();
-  
-  //checking if a level is completed
-  levelComplete();
-  
-  //gold comet
-  for(int i = mineComet.size() - 1 ; i >= 0 ; i --)
+  if(menu == true)
   {
-    GameObject go = mineComet.get(i);
-    go.update();
-    go.render();
-  }//end for
-  
-  //white comet
-  for(int i = normalComet.size() - 1 ; i >= 0 ; i --)
+    background(0);
+    float boxWidth = width/3;
+    float boxHeight = height/5;
+    
+    float x = width/2 - boxWidth/2;
+    float y = height/2 - boxHeight/2;
+    
+    fill(0);
+    stroke(255);
+    strokeWeight(5);
+    if(mouseX > x && mouseX < x + boxWidth && mouseY > y - boxHeight/1.5 && y < y + boxHeight/1.5)
+    {
+      stroke(200);
+      rect(x, y - boxHeight/1.5, boxWidth, boxHeight);
+    }
+    else
+    {
+      stroke(255);
+      rect(x, y - boxHeight/1.5, boxWidth, boxHeight);
+    }//end else
+    rect(x, y + boxHeight/1.5, boxWidth, boxHeight);
+    
+    textAlign(CENTER);
+    fill(255);
+    textSize(width/20);
+    text("Start Game", width/2, height/2 - boxHeight/2);
+    text("Exit Game", width/2, height/2 + boxHeight/1.25);
+    strokeWeight(1);
+
+  }//end if
+  if(menu == false)
   {
-    GameObject go = normalComet.get(i);
-    go.update();
-    go.render();
-  }//end for
-  
-  for(int i = tntComet.size() - 1 ; i >= 0 ; i --)
-  {
-    GameObject go = tntComet.get(i);
-    go.update();
-    go.render();
-  }//end for
-  
-  //ship
-    GameObject go = ship.get(0);
-    go.update();
-    go.render();
-  
-  stroke(255);
-  fill(255);
-  rect(0, 0, width, sideLength/2);
-  
-  //set up level
-  levelInfo();
+    background(0);
+    
+    //create the right amount of comets for the level
+    createComet();
+    
+    //draw the spawn point
+    spawnPoint();
+    
+    //refresh the stars
+    stars();
+    
+    //checking if a level is completed
+    levelComplete();
+    
+    //gold comet
+    for(int i = mineComet.size() - 1 ; i >= 0 ; i --)
+    {
+      GameObject go = mineComet.get(i);
+      go.update();
+      go.render();
+    }//end for
+    
+    //white comet
+    for(int i = normalComet.size() - 1 ; i >= 0 ; i --)
+    {
+      GameObject go = normalComet.get(i);
+      go.update();
+      go.render();
+    }//end for
+    
+    for(int i = tntComet.size() - 1 ; i >= 0 ; i --)
+    {
+      GameObject go = tntComet.get(i);
+      go.update();
+      go.render();
+    }//end for
+    
+    //ship
+      GameObject go = ship.get(0);
+      go.update();
+      go.render();
+    
+    stroke(255);
+    fill(255);
+    rect(0, 0, width, sideLength/2);
+    
+    //set up level
+    levelInfo();
+  }//end if
 }//end draw()
 
 int levelIndex = 0;
