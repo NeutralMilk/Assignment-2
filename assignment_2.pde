@@ -112,17 +112,27 @@ void draw()
     fill(0);
     stroke(255);
     strokeWeight(5);
-    if(mouseX > x && mouseX < x + boxWidth && mouseY > y - boxHeight/1.5 && y < y + boxHeight/1.5)
+    if(mouseX > x && mouseX < x + boxWidth && mouseY > y - boxHeight/1.5 && mouseY < y + boxHeight/1.5)
     {
-      stroke(200);
+      fill(25);
       rect(x, y - boxHeight/1.5, boxWidth, boxHeight);
     }
     else
     {
-      stroke(255);
+      fill(0);
       rect(x, y - boxHeight/1.5, boxWidth, boxHeight);
     }//end else
-    rect(x, y + boxHeight/1.5, boxWidth, boxHeight);
+        
+    if(mouseX > x && mouseX < x + boxWidth && mouseY > y + boxHeight/1.5 && mouseY < y + boxHeight/3)
+    {
+      fill(25);
+      rect(x, y - boxHeight/1.5, boxWidth, boxHeight);
+    }
+    else
+    {
+      fill(0);
+      rect(x, y + boxHeight/1.5, boxWidth, boxHeight);
+    }//end else   
     
     textAlign(CENTER);
     fill(255);
