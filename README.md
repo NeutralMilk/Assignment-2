@@ -11,3 +11,5 @@ The red ones can be blown up remotely using the bombs you find.
 Blowing these up destroys surrounding white comets, and also collects the gold ones surrounding it.
 
 To blow them up click on them with your mouse.
+
+Use W, A and S to move and press spacebar to slow your rocket.
