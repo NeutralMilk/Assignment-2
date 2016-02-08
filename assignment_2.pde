@@ -186,6 +186,9 @@ void levelInfo()
   textSize(32);
   fill(0);
   text(level.get(levelIndex), width/2, sideLength/3);
+  
+  //display comet amounts
+  rect(width/2+textBorder, sideLength/3, sideLength/4, sideLength/4);
   text(cometAmount.get(levelIndex), width/2+textBorder, sideLength/3);
   text(mineAmount.get(levelIndex), width/2+(textBorder*2), sideLength/3);
   text(tntAmount.get(levelIndex), width/2+(textBorder*3), sideLength/3);
@@ -193,8 +196,7 @@ void levelInfo()
   fill(255);
   strokeWeight(3);
   stroke(0);
-  //line((width/4 + border/4), (border), (width/4 + border), (border)); 
-  rect(width/4, sideLength/8, sideLength/4, sideLength/4);
+  line((width/4 + border/4), (border), (width/4 + border), (border)); 
   
   strokeWeight(1);
 }//end levelConfig
@@ -212,7 +214,7 @@ void keyReleased()
 void spawnPoint()
 {
   strokeWeight(3);
-  stroke(100, 50 ,255);
+  stroke(0, 150, 255);
   fill(0);  
   rect(width-sideLength-border, (height/2)-(sideLength/2), sideLength, sideLength);
   stroke(255);
@@ -223,7 +225,7 @@ void createComet()
 {
   if (create == true)
   {
-    for(int i = 0; i < cometAmount.get(levelIndex)-mineAmount.get(levelIndex)-tntAmount.get(levelIndex); i++)
+    for(int i = 0; i < cometAmount.get(levelIndex); i++)
     {      
       Comet comet1 = new Comet();
       normalComet.add(comet1);
@@ -250,6 +252,7 @@ void createComet()
 }//end createComet
 
 int collected = 0;
+
 void checkCollisions()
 {
  for(int i = ship.size() - 1 ; i >= 0; i --)
@@ -257,63 +260,54 @@ void checkCollisions()
     GameObject go = ship.get(0);
     
     //check for mineables
-    for(int j = mineComet.size() - 1 ; j >= 0   ;j --)
+    for(int j = mineComet.size() - 1 ; j >= 0; j --)
     {
-       GameObject k = mineComet.get(j);
-       if (k instanceof MineComet) 
-         {
-           if (go.pos.dist(k.pos) < go.size*1.2 + k.size*1.2)
-           {      
-              mineComet.remove(k);
-              collected++;
-           }//end if
-         }//end if
+       GameObject k = mineComet.get(j);      
+       if (go.pos.dist(k.pos) < go.size*1.2 + k.size*1.2)
+       {      
+          mineComet.remove(k);
+          collected++;
+       }//end if   
     }//end for
    
     //check for white comets
-    for(int j = normalComet.size() - 1 ; j >= 0   ;j --)
+    for(int j = normalComet.size() - 1 ; j >= 0; j --)
     {
       GameObject k = normalComet.get(j);
-      if (k instanceof Comet)
+      if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
       {
-        if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
-        {
-          normalComet.clear();
-          mineComet.clear();
-          tntComet.clear();
-          
-          collected = 0;
-          create = true;
-          createComet();
-          
-          ship.remove(0);
-          Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
-          ship.add(rocket);
-        }//end if
+        normalComet.clear();
+        mineComet.clear();
+        tntComet.clear();
+        
+        collected = 0;
+        create = true;
+        createComet();
+        
+        ship.remove(0);
+        Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
+        ship.add(rocket);
       }//end if
     }//end for
     
     //check for tnt comets
-    for(int j = tntComet.size() - 1 ; j >= 0   ;j --)
+    for(int j = tntComet.size() - 1 ; j >= 0; j --)
     {
       GameObject k = tntComet.get(j);
-      if (k instanceof TNTComet)
+      if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
       {
-        if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
-        {
-          levelIndex--;
-          normalComet.clear();
-          mineComet.clear();
-          tntComet.clear();
-          
-          collected = 0;
-          create = true;
-          createComet();        
-          
-          ship.remove(0);
-          Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
-          ship.add(rocket);
-        }//end if
+        levelIndex--;
+        normalComet.clear();
+        mineComet.clear();
+        tntComet.clear();
+        
+        collected = 0;
+        create = true;
+        createComet();        
+        
+        ship.remove(0);
+        Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
+        ship.add(rocket);
       }//end if
     }//end for
   }//end for

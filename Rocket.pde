@@ -52,12 +52,12 @@ class Rocket extends GameObject
     
     if (keys[left])
     {
-      theta -= 0.15f;
+      theta -= 0.125f;
     }//end if
     
     if (keys[right])
     {
-      theta += 0.15f;
+      theta += 0.125f;
     }//end if   
     
     //allow top and bottom to wrap around but not left and right
