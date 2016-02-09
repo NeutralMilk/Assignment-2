@@ -117,7 +117,6 @@ void draw()
 //draw the menu
 void menu()
 {
-  background(0);
   float boxWidth = width/3;
   float boxHeight = height/5;
   
@@ -258,6 +257,7 @@ void levelComplete()
       Rocket rocket = new Rocket('W', 'A', 'D',' ', width-sideLength/2-border, height/2, color(255));
       ship.add(rocket);
       collected = 0;
+      bomb = 0;
   
     }//end if
   }//end if
@@ -274,9 +274,12 @@ void levelInfo()
   
   fill(218, 165, 32);
   //display comet amounts
-  text(collected, width/2+(textSpace), sideLength/3);
+  text(collected, width/2 + textSpace, sideLength/3);
   text("/", width/2+(textSpace + textBorder), sideLength/3);
   text(mineAmount.get(levelIndex), width/2+(textSpace + textBorder*2), sideLength/3);
+  
+  fill(255, 0, 0);
+  text(bomb, width/2 - textSpace, sideLength/3);
 }//end levelConfig
 
 void keyPressed()
@@ -286,7 +289,16 @@ void keyPressed()
   if (key == 'm') 
   {
     firstTime = false;
-    menu = true;
+   
+    if(menu == true)
+    {
+      menu = false;
+    }//end if
+    
+    else
+    {
+      menu = true;
+    }//end else
   }//end if
 }
 
@@ -352,12 +364,7 @@ void checkCollisions()
           mineComet.remove(k);
           collected++;
           
-          int r = (int)random(0,2);
-          if(r == 0);
-          {
-            bomb++;
-          }//end if
-          
+          bomb++;   
        }//end if   
     }//end for
    
