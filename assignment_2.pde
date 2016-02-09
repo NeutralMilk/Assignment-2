@@ -7,6 +7,7 @@ int[] brightness;
 float sideLength;
 float border;
 
+int bomb = 0;
 int random;
 
 //variables to determine comet amount
@@ -97,105 +98,140 @@ void initialStars()
 }//end initialStars
 
 boolean menu = true;
+boolean firstTime = true;
 
 void draw()
 {
   if(menu == true)
   {
-    background(0);
-    float boxWidth = width/3;
-    float boxHeight = height/5;
-    
-    float x = width/2 - boxWidth/2;
-    float y = height/2 - boxHeight/2;
-    
-    fill(0);
-    stroke(255);
-    strokeWeight(5);
-    if(mouseX > x && mouseX < x + boxWidth && mouseY > y - boxHeight/1.5 && mouseY < y + boxHeight/1.5)
-    {
-      fill(25);
-      rect(x, y - boxHeight/1.5, boxWidth, boxHeight);
-    }
-    else
-    {
-      fill(0);
-      rect(x, y - boxHeight/1.5, boxWidth, boxHeight);
-    }//end else
-        
-    if(mouseX > x && mouseX < x + boxWidth && mouseY > y + boxHeight/1.5 && mouseY < y + boxHeight/3)
-    {
-      fill(25);
-      rect(x, y - boxHeight/1.5, boxWidth, boxHeight);
-    }
-    else
-    {
-      fill(0);
-      rect(x, y + boxHeight/1.5, boxWidth, boxHeight);
-    }//end else   
-    
-    textAlign(CENTER);
-    fill(255);
-    textSize(width/20);
-    text("Start Game", width/2, height/2 - boxHeight/2);
-    text("Exit Game", width/2, height/2 + boxHeight/1.25);
-    strokeWeight(1);
-
+    menu();
   }//end if
+  
   if(menu == false)
   {
-    background(0);
-    
-    //create the right amount of comets for the level
-    createComet();
-    
-    //draw the spawn point
-    spawnPoint();
-    
-    //refresh the stars
-    stars();
-    
-    //checking if a level is completed
-    levelComplete();
-    
-    //gold comet
-    for(int i = mineComet.size() - 1 ; i >= 0 ; i --)
-    {
-      GameObject go = mineComet.get(i);
-      go.update();
-      go.render();
-    }//end for
-    
-    //white comet
-    for(int i = normalComet.size() - 1 ; i >= 0 ; i --)
-    {
-      GameObject go = normalComet.get(i);
-      go.update();
-      go.render();
-    }//end for
-    
-    for(int i = tntComet.size() - 1 ; i >= 0 ; i --)
-    {
-      GameObject go = tntComet.get(i);
-      go.update();
-      go.render();
-    }//end for
-    
-    //ship
-      GameObject go = ship.get(0);
-      go.update();
-      go.render();
-    
-    stroke(255);
-    fill(255);
-    rect(0, 0, width, sideLength/2);
-    
-    //set up level
-    levelInfo();
+    game();
   }//end if
+  
 }//end draw()
 
+//draw the menu
+void menu()
+{
+  background(0);
+  float boxWidth = width/3;
+  float boxHeight = height/5;
+  
+  float x = width/2 - boxWidth/2;
+  float y = height/2 - boxHeight/2;
+  
+  fill(0);
+  stroke(255);
+  strokeWeight(5);
+  
+  if(mouseX > x && mouseX < x + boxWidth && mouseY > y - boxHeight/1.5 && mouseY < y + boxHeight/3)
+  {
+    fill(50);
+    if(mousePressed)
+    {
+      menu = false;
+    }//end if
+  }
+  else
+  {
+    fill(0);
+  }//end else
+  
+  rect(x, y - boxHeight/1.5, boxWidth, boxHeight);
+
+      
+  if(mouseX > x && mouseX < x + boxWidth && mouseY > y + boxHeight/1.5 && mouseY < y + boxHeight*1.7)
+  {
+    fill(50);
+    if(mousePressed)
+    {
+      exit();
+    }//end if
+  }
+  else
+  {
+    fill(0);
+  }//end else  
+  
+  rect(x, y + boxHeight/1.5, boxWidth, boxHeight);
+  
+  textAlign(CENTER);
+  fill(255);
+  textSize(width/20);
+  if(firstTime == true)
+  {
+    text("Start Game", width/2, height/2 - boxHeight/2);
+  }//end if
+  
+  else
+  {
+    text("Resume", width/2, height/2 - boxHeight/2);
+  }//end else
+  
+  text("Exit Game", width/2, height/2 + boxHeight/1.25);
+  strokeWeight(1);
+
+}//end menu()
+
+//run all the game functions
+void game()
+{
+  background(0);
+  
+  //create the right amount of comets for the level
+  createComet();
+  
+  //draw the spawn point
+  spawnPoint();
+  
+  //refresh the stars
+  stars();
+  
+  //checking if a level is completed
+  levelComplete();
+  
+  //gold comet
+  for(int i = mineComet.size() - 1 ; i >= 0 ; i --)
+  {
+    GameObject go = mineComet.get(i);
+    go.update();
+    go.render();
+  }//end for
+  
+  //white comet
+  for(int i = normalComet.size() - 1 ; i >= 0 ; i --)
+  {
+    GameObject go = normalComet.get(i);
+    go.update();
+    go.render();
+  }//end for
+  
+  for(int i = tntComet.size() - 1 ; i >= 0 ; i --)
+  {
+    GameObject go = tntComet.get(i);
+    go.update();
+    go.render();
+  }//end for
+  
+  //ship
+    GameObject go = ship.get(0);
+    go.update();
+    go.render();
+  
+  stroke(255);
+  fill(255);
+  rect(0, 0, width, sideLength/2);
+  
+  //set up level
+  levelInfo();
+}//end game()
+
 int levelIndex = 0;
+
 void levelComplete()
 {
   float h = (height + sideLength) / 2;
@@ -226,31 +262,32 @@ void levelComplete()
     }//end if
   }//end if
 }//end levelComplete()
+
 void levelInfo()
 {    
   
-  float textBorder = height/8;
+  float textSpace = height/8;
+  float textBorder = height/32;
   textSize(32);
   fill(0);
   text(level.get(levelIndex), width/2, sideLength/3);
   
+  fill(218, 165, 32);
   //display comet amounts
-  rect(width/2+textBorder, sideLength/3, sideLength/4, sideLength/4);
-  text(cometAmount.get(levelIndex), width/2+textBorder, sideLength/3);
-  text(mineAmount.get(levelIndex), width/2+(textBorder*2), sideLength/3);
-  text(tntAmount.get(levelIndex), width/2+(textBorder*3), sideLength/3);
-
-  fill(255);
-  strokeWeight(3);
-  stroke(0);
-  line((width/4 + border/4), (border), (width/4 + border), (border)); 
-  
-  strokeWeight(1);
+  text(collected, width/2+(textSpace), sideLength/3);
+  text("/", width/2+(textSpace + textBorder), sideLength/3);
+  text(mineAmount.get(levelIndex), width/2+(textSpace + textBorder*2), sideLength/3);
 }//end levelConfig
 
 void keyPressed()
 {
   keys[keyCode] = true;
+  
+  if (key == 'm') 
+  {
+    firstTime = false;
+    menu = true;
+  }//end if
 }
 
 void keyReleased()
@@ -314,6 +351,13 @@ void checkCollisions()
        {      
           mineComet.remove(k);
           collected++;
+          
+          int r = (int)random(0,2);
+          if(r == 0);
+          {
+            bomb++;
+          }//end if
+          
        }//end if   
     }//end for
    
