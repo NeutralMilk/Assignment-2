@@ -39,8 +39,8 @@ boolean[] keys = new boolean[512];
 
 void setup()
 {
-  //fullScreen();
-  size(1600,900);
+  fullScreen();
+
   background(0);
   
   //load in level data
@@ -333,7 +333,7 @@ void mouseClicked()
   {
     GameObject go = tntComet.get(i);
     PVector mousePos = new PVector(mouseX, mouseY);
-    
+     
     if(bomb > 0)
     {
       bombSound.play();
@@ -345,11 +345,12 @@ void mouseClicked()
         fill(255, 0, 0);
         ellipse(go.pos.x, go.pos.y, go.size*10, go.size*10);
         destroyComets();
+        bomb --;
       }//end if
     }//end if  
   }//end for
   
-  bomb --;
+  
   if(bomb < 0)
   {
     bomb = 0;
