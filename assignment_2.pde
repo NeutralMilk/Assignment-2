@@ -1,3 +1,4 @@
+import ddf.minim.*;
 
 //variables about stars
 int[] starX;
@@ -9,6 +10,13 @@ float border;
 
 int bomb = 0;
 int random;
+
+AudioPlayer bombSound;
+AudioPlayer rocketSound;
+AudioPlayer nextLevelSound;
+AudioPlayer collectSound;
+AudioPlayer levelDownSound;
+Minim minim;
 
 //variables to determine comet amount
 StringList level = new StringList();
@@ -31,7 +39,8 @@ boolean[] keys = new boolean[512];
 
 void setup()
 {
-  fullScreen();
+  //fullScreen();
+  size(1600,900);
   background(0);
   
   //load in level data
@@ -54,6 +63,13 @@ void setup()
   
   //draw the stars initially
   initialStars();
+  
+  minim = new Minim(this);
+  bombSound = minim.loadFile("bomb.wav", 2048);
+  rocketSound = minim.loadFile("rocket.wav", 2048);
+  nextLevelSound = minim.loadFile("levelUp.mp3", 2048);
+  levelDownSound = minim.loadFile("levelDown.mp3", 2048);
+  collectSound = minim.loadFile("coin.mp3", 2048);
   
 }//end setup()
 
@@ -245,6 +261,8 @@ void levelComplete()
     GameObject go = ship.get(0);
     if(go.pos.x > -1 && go.pos.x < 20 && go.pos.y > h-l/2 && go.pos.y < h - l/2 + l)
     {
+      nextLevelSound.play();
+      nextLevelSound.rewind();
       levelIndex ++;
       
       normalComet.clear();
@@ -305,7 +323,66 @@ void keyPressed()
 void keyReleased()
 {
   keys[keyCode] = false;
+  rocketSound.pause();
+  rocketSound.rewind();
 }
+
+void mouseClicked()
+{  
+  for(int i = 0; i < tntComet.size(); i ++)
+  {
+    GameObject go = tntComet.get(i);
+    PVector mousePos = new PVector(mouseX, mouseY);
+    
+    if(bomb > 0)
+    {
+      bombSound.play();
+      bombSound.rewind();
+      if(go.pos.dist(mousePos) < go.size*4)
+      {    
+        tntComet.remove(i);
+        stroke(255);
+        fill(255, 0, 0);
+        ellipse(go.pos.x, go.pos.y, go.size*10, go.size*10);
+        destroyComets();
+      }//end if
+    }//end if  
+  }//end for
+  
+  bomb --;
+  if(bomb < 0)
+  {
+    bomb = 0;
+  }//end if
+}//end mouseClicked()
+
+void destroyComets()
+{
+  for(int i = 0; i < tntComet.size(); i ++)
+  {
+    GameObject go = tntComet.get(i);     
+    
+    for(int j = 0; j < normalComet.size(); j ++)
+    {
+      GameObject n = normalComet.get(j);
+      if(n.pos.dist(go.pos) < go.size*5)
+      {
+        normalComet.remove(j);
+      }//end if
+    }//end for
+    for(int j = 0; j < mineComet.size(); j ++)
+    {
+      GameObject m = mineComet.get(j);      
+      if(m.pos.dist(go.pos) < go.size*5)
+      {
+        collectSound.play();
+        collectSound.rewind();
+        mineComet.remove(j);
+        collected++;
+      }//end if
+    }//end for
+  }//end for
+}//end destroyComets()
 
 void spawnPoint()
 {
@@ -321,6 +398,10 @@ void createComet()
 {
   if (create == true)
   {
+    if(levelIndex == -1)
+    {
+      levelIndex = 0;
+    }//end if
     for(int i = 0; i < cometAmount.get(levelIndex); i++)
     {      
       Comet comet1 = new Comet();
@@ -361,6 +442,8 @@ void checkCollisions()
        GameObject k = mineComet.get(j);      
        if (go.pos.dist(k.pos) < go.size*1.2 + k.size*1.2)
        {      
+          collectSound.play();
+          collectSound.rewind();
           mineComet.remove(k);
           collected++;
           
@@ -374,11 +457,14 @@ void checkCollisions()
       GameObject k = normalComet.get(j);
       if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
       {
+        levelDownSound.play();
+        levelDownSound.rewind();
         normalComet.clear();
         mineComet.clear();
         tntComet.clear();
         
         collected = 0;
+        bomb = 0;
         create = true;
         createComet();
         
@@ -395,6 +481,8 @@ void checkCollisions()
       if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
       {
         levelIndex--;
+        levelDownSound.play();
+        levelDownSound.rewind();
         normalComet.clear();
         mineComet.clear();
         tntComet.clear();

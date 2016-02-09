@@ -38,6 +38,7 @@ class Rocket extends GameObject
     if (keys[move])
     {
       pos.add(forward);
+      rocketSound.play();
     }//end if
     
     if (keys[slow]) 
