@@ -12,6 +12,7 @@ Blowing these up destroys surrounding white comets, and also collects the gold o
 
 To blow them up click on them with your mouse.
 
-Use W, A and S to move and press spacebar to slow your rocket.
+Use W, A and S to move and press spacebar to slow your rocket. M brings you to the menu during the game.
 
 The Yellow number at the top is how many asteroids you have collected and the red number is how many bombs you have
+
