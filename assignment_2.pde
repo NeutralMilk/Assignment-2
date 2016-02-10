@@ -407,6 +407,14 @@ void spawnPoint()
 
 void createComet()
 {
+  if(levelIndex > levelData.size()/5-1)
+  {
+    println("this works");
+    levelIndex = 0;
+    menu = true;
+    firstTime = true;
+    menu();
+  }//end if
   if (create == true)
   {
     if(levelIndex == -1)
