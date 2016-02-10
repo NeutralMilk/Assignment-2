@@ -8,9 +8,11 @@ int[] brightness;
 float sideLength;
 float border;
 
+//some other variables
 int bomb = 0;
 int random;
 
+//sound variables
 AudioPlayer bombSound;
 AudioPlayer rocketSound;
 AudioPlayer nextLevelSound;
@@ -64,6 +66,7 @@ void setup()
   //draw the stars initially
   initialStars();
   
+  //load in the sounds
   minim = new Minim(this);
   bombSound = minim.loadFile("bomb.wav", 2048);
   rocketSound = minim.loadFile("rocket.wav", 2048);
@@ -258,6 +261,7 @@ void levelComplete()
     stroke(0,255,0);
     rect(0, h - l/2, 10, l);
     
+    //check if the rocket touches the green goal
     GameObject go = ship.get(0);
     if(go.pos.x > -1 && go.pos.x < 20 && go.pos.y > h-l/2 && go.pos.y < h - l/2 + l)
     {
@@ -265,6 +269,8 @@ void levelComplete()
       nextLevelSound.rewind();
       levelIndex ++;
       
+      initialStars();
+      //set the next level
       normalComet.clear();
       mineComet.clear();
       tntComet.clear();
@@ -284,6 +290,7 @@ void levelComplete()
 void levelInfo()
 {    
   
+  //display the info at the top
   float textSpace = height/8;
   float textBorder = height/32;
   textSize(32);
@@ -329,6 +336,7 @@ void keyReleased()
 
 void mouseClicked()
 {  
+  //check to see if you clicked on a comet
   for(int i = 0; i < tntComet.size(); i ++)
   {
     GameObject go = tntComet.get(i);
@@ -351,6 +359,7 @@ void mouseClicked()
   }//end for
   
   
+  //prevent negative bombs
   if(bomb < 0)
   {
     bomb = 0;
@@ -359,6 +368,7 @@ void mouseClicked()
 
 void destroyComets()
 {
+  //if a bomb is blown up, destroy the ones around it
   for(int i = 0; i < tntComet.size(); i ++)
   {
     GameObject go = tntComet.get(i);     
@@ -435,6 +445,8 @@ void checkCollisions()
 {
  for(int i = ship.size() - 1 ; i >= 0; i --)
  {
+    
+    //modified collision detection to better suit the game
     GameObject go = ship.get(0);
     
     //check for mineables
@@ -482,6 +494,7 @@ void checkCollisions()
       if (go.pos.dist(k.pos) < go.size*1.1 + k.size*1.1)
       {
         levelIndex--;
+        initialStars();
         levelDownSound.play();
         levelDownSound.rewind();
         normalComet.clear();
